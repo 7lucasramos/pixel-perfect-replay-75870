@@ -152,7 +152,7 @@ function arcGeometry(a: [number, number], b: [number, number]) {
 }
 
 /* ---------- component ---------- */
-export function Globe({ mode }: { mode: HeroMode }) {
+export function Globe({ mode, onReady }: { mode: HeroMode; onReady?: () => void }) {
   const lite = mode === "lite";
   const reduced = mode === "reduced";
   const { camera, size, gl } = useThree();
@@ -171,7 +171,7 @@ export function Globe({ mode }: { mode: HeroMode }) {
 
   useEffect(() => {
     let cancelled = false;
-    loadGlobePoints(lite).then((p) => { if (!cancelled) setPoints(p); }).catch((e) => console.error("globe data", e));
+    loadGlobePoints(lite).then((p) => { if (!cancelled) { setPoints(p); onReady?.(); } }).catch((e) => console.error("globe data", e));
     return () => { cancelled = true; };
   }, [lite]);
 

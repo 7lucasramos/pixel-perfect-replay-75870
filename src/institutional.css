@@ -68,7 +68,7 @@
 .hz-canvas { opacity: 0; transition: opacity .4s ease-out; }
 .hz-canvas.is-ready { opacity: 1; }
 /* Keeps hero copy AA-legible over the globe throughout the scroll. */
-.hz-legibility { background: radial-gradient(ellipse at center, color-mix(in oklab, var(--bz-white) 72%, transparent) 0%, color-mix(in oklab, var(--bz-white) 40%, transparent) 45%, transparent 75%); }
+.hz-legibility { opacity: 0; background: radial-gradient(ellipse at center, color-mix(in oklab, var(--bz-white) 60%, transparent) 0%, color-mix(in oklab, var(--bz-white) 40%, transparent) 45%, transparent 75%); }
 
 /* Wave cursor: fine pointer only; never hides the native cursor or blocks clicks. */
 .bz-cursor { position: fixed; left: 0; top: 0; z-index: 90; width: 24px; height: 24px; margin: -12px 0 0 -12px; border-radius: 9999px; border: 1.5px solid var(--bz-cyan); pointer-events: none; opacity: 0; transition: opacity .2s, scale .2s; will-change: transform; }
@@ -82,3 +82,4 @@
 }
 html.bz-motion-paused *, html.bz-motion-paused *::before, html.bz-motion-paused *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
 html.bz-motion-paused .bz-cursor { display: none; }
+.hero-static .hz-legibility { opacity: 1; }

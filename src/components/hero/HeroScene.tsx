@@ -2,7 +2,7 @@ import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { detectHeroMode, type HeroMode } from "./capabilities";
-import { initMotionPreference, isMotionPaused, onMotionPausedChange } from "@/lib/motion";
+import { initMotionPreference, onMotionPausedChange } from "@/lib/motion";
 import { heroProgress, setHeroRevealed } from "./useHeroProgress";
 import { LogoReveal } from "./LogoReveal";
 import { HERO_EYEBROW } from "@/lib/site";
@@ -81,6 +81,7 @@ export function HeroScene() {
         .fromTo(".hz-wave", { opacity: 0.7, scale: 0.6 }, { opacity: 0, scale: 2.4, duration: 0.12, stagger: 0.04, ease: "power1.out", immediateRender: false }, 0.56)
         // Phase B: reveal ONZAI / SYSTEM from the B while recentring the full logo.
         .to(".hz-logo", { clipPath: "inset(0 0% 0 0)", xPercent: 0, duration: 0.10, ease: "power3.out" }, 0.66)
+        .to(".hz-legibility", { opacity: 1, duration: 0.1 }, 0.6)
         .fromTo(".hz-headline", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.08, ease: "power2.out" }, 0.72)
         .fromTo(".hz-line", { opacity: 0, scaleX: 0 }, { opacity: 1, scaleX: 1, duration: 0.06 }, 0.74)
         .to(".hz-grid-dense", { opacity: 1, duration: 0.2 }, 0.8)
