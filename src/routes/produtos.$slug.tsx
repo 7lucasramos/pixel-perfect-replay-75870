@@ -5,7 +5,7 @@ import { SiteNotFound } from "@/components/layout/SiteNotFound";
 import { institutionalHead, useDocumentTitle } from "@/hooks/useDocumentTitle";
 const description = "Sistema de sonorização Bonzai Mini: configuração em arranjo de módulos.";
 export const Route = createFileRoute("/produtos/$slug")({
-  validateSearch: (search: Record<string, unknown>): { preview?: string } => ({ preview: search.preview === "specs" ? "specs" : undefined }),
+  validateSearch: (search: Record<string, unknown>): { preview?: string } => (search["preview"] === "specs" ? { preview: "specs" } : {}),
   loader: ({ params }) => { if (!findProduct(params.slug)) throw notFound(); return { slug: params.slug }; },
   head: ({ loaderData }) => {
     const product = findProduct(loaderData?.slug);

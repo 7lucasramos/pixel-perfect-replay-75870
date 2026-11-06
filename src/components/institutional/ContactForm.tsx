@@ -8,7 +8,7 @@ import { contactSchema, type ContactInput } from "@/lib/contact-schema";
 import { submitContact } from "@/lib/contact.functions";
 import { COPY, PROFILES, PROJECT_TYPES } from "@/content/site";
 import { productContactDefaults } from "@/content/products";
-export function ContactForm({ productSlug }: { productSlug?: string }) {
+export function ContactForm({ productSlug }: { productSlug?: string | undefined }) {
  const [success, setSuccess] = useState(false), [failed, setFailed] = useState(false);
  const send = useServerFn(submitContact);
  const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<ContactInput>({ resolver: zodResolver(contactSchema), defaultValues: { nome: "", empresa: "", email: "", telefone: "", perfil: "", ...productContactDefaults(productSlug), consentimento: false, website: "" } });

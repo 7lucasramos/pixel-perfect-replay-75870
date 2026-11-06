@@ -2,7 +2,7 @@ import { useRef, type PointerEvent } from "react";
 import { Box } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-export function ProductStage({ image, name, priority = false }: { image?: string; name: string; priority?: boolean }) {
+export function ProductStage({ image, name, priority = false }: { image?: string | undefined; name: string; priority?: boolean }) {
   const ref = useRef<HTMLDivElement>(null);
   function move(event: PointerEvent<HTMLDivElement>) {
     if (event.pointerType !== "mouse" || !window.matchMedia("(pointer: fine) and (prefers-reduced-motion: no-preference)").matches) return;

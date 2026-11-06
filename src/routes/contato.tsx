@@ -6,7 +6,7 @@ import { institutionalHead, useDocumentTitle } from "@/hooks/useDocumentTitle";
 import { findProduct } from "@/content/products";
 
 export const Route = createFileRoute("/contato")({
-  validateSearch: (search: Record<string, unknown>): { produto?: string } => ({ produto: typeof search.produto === "string" && findProduct(search.produto) ? search.produto : undefined }),
+  validateSearch: (search: Record<string, unknown>): { produto?: string } => (typeof search["produto"] === "string" && findProduct(search["produto"]) ? { produto: search["produto"] } : {}),
   head: () => institutionalHead(SEO.contact.title, SEO.contact.description),
   component: ContactPage,
 });
