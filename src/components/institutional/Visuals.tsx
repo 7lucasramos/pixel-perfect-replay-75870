@@ -52,7 +52,7 @@ export function DotCanvas({ metamorphosis = false }: { metamorphosis?: boolean }
       const rect = canvas.getBoundingClientRect(); width = rect.width; height = rect.height;
       const dpr = Math.min(devicePixelRatio, 2); canvas.width = width * dpr; canvas.height = height * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); schedule();
     };
-    const observer = new IntersectionObserver(([entry]) => { active = entry.isIntersecting; if (active) schedule(); else { cancelAnimationFrame(frame); frame = 0; } });
+    const observer = new IntersectionObserver(([entry]) => { active = entry?.isIntersecting ?? false; if (active) schedule(); else { cancelAnimationFrame(frame); frame = 0; } });
     observer.observe(canvas);
     const resizeObserver = new ResizeObserver(resize); resizeObserver.observe(canvas); resize();
     const move = (event: PointerEvent) => { const rect = canvas.getBoundingClientRect(); cursor.x = event.clientX - rect.left; cursor.y = event.clientY - rect.top; schedule(); };
@@ -71,7 +71,7 @@ export function WaveRings({ className = "" }: { className?: string }) {
   const ref = useRef<SVGSVGElement>(null);
   useEffect(() => {
     const svg = ref.current; if (!svg) return;
-    const observer = new IntersectionObserver(([entry]) => svg.classList.toggle("bz-in-view", entry.isIntersecting)); observer.observe(svg);
+    const observer = new IntersectionObserver(([entry]) => svg.classList.toggle("bz-in-view", entry?.isIntersecting ?? false)); observer.observe(svg);
     return () => observer.disconnect();
   }, []);
   return <svg ref={ref} viewBox="0 0 600 450" aria-hidden="true" className={`bz-wave-rings ${className}`}><g fill="none" stroke="currentColor" strokeWidth="1">{[45, 80, 115, 150, 185, 220].map(r => <circle key={r} cx="300" cy="225" r={r} />)}</g></svg>;
