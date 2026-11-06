@@ -1,6 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { HeroScene } from "@/components/hero/HeroScene";
 import { AboutOrigin } from "@/components/sections/AboutOrigin";
+import { AboutStory } from "@/components/institutional/AboutStory";
+import { TransitionBand } from "@/components/institutional/Motion";
+import { TechTeaser, ProductsTeaser, CasesTeaser } from "@/components/institutional/Teasers";
+import { Solutions } from "@/components/institutional/Solutions";
+import { ContactCTA } from "@/components/institutional/Shared";
 
 const TITLE = "Bonzai System | Sistemas profissionais de sonorização";
 const DESC = "Bonzai System: engenharia e sistemas profissionais de sonorização de alto padrão.";
@@ -30,6 +35,18 @@ function Index() {
     <main>
       <HeroScene />
       <AboutOrigin />
+      <TransitionBand kind="ice-white" />
+      <AboutStory home />
+      <TransitionBand kind="white-ink" />
+      <TechTeaser />
+      <TransitionBand kind="ink-white" />
+      <Solutions />
+      <TransitionBand kind="white-ice" />
+      <ProductsTeaser />
+      <TransitionBand kind="ice-white" />
+      <CasesTeaser />
+      <TransitionBand kind="white-ink" />
+      <ContactCTA />
     </main>
   );
 }

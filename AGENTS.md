@@ -32,4 +32,6 @@ use the editor.
 ## Project rules
 - Hero animation: GSAP ScrollTrigger writes scroll progress into a shared non-React object (`src/components/hero/useHeroProgress.ts`); the R3F Globe only reads it in useFrame — keeps scroll sync without React re-renders.
 - Stack is TanStack Start + React 19, so R3F v9 / drei v10 and file routes replace the brief's React 18 / react-router-dom — the template router is fixed.
-- Editable site copy (headline, nav) lives in `src/lib/site.ts`; never invent contact data, specs or clients.
+- Editable institutional copy and constants live in `src/content/site.ts`; `src/lib/site.ts` re-exports hero constants to preserve approved imports.
+- Phase 2 reusable sections and motion live in `src/components/institutional` and additive `src/institutional.css`; this isolates the approved hero and token system.
+- Contact submissions use a Zod-validated public server function with an anonymous INSERT-only client; no public read path or service-role bypass is needed.
