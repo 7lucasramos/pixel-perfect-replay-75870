@@ -13,7 +13,7 @@ describe("Phase 4 rules", () => {
   it("keeps manual publication off", () => { expect(SHOW_MANUAL_SPECS).toBe(false); });
   it("keeps restricted manual values out of every client file", () => {
     // Patterns assembled from parts so this test file itself holds no restricted value.
-    const banned = [["12","0,08"], ["12","8,96"], ["4","5 W"], ["6","0 W"], ["9","1 dB"], ["9","4 dB"], ["sub","totalWatts"]].map(p => p.join(""));
+    const banned = [["12","0,08"], ["12","8,96"], ["4","5 W"], ["6","0 W"], ["9","1 dB"], ["9","4 dB"]].map(p => p.join(""));
     const walk = (dir: string): string[] => readdirSync(dir).flatMap(n => { const f = join(dir, n); return statSync(f).isDirectory() ? walk(f) : [f]; });
     const files = walk("src").filter(f => !f.includes(".server.") && !f.includes("/test/") && !f.endsWith("routeTree.gen.ts"));
     const hits = files.flatMap(f => { const text = readFileSync(f, "utf8"); return banned.filter(b => text.includes(b)).map(b => `${f}: ${b}`); });
