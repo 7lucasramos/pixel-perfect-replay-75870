@@ -54,3 +54,31 @@
 }
 @media (min-width: 768px) and (max-width: 1023px) { .bz-story-block { column-gap: 64px; } }
 @media (prefers-reduced-motion: reduce) { .bz-route-enter, .bz-wave-rings g { animation: none; } .bz-solution-card { transform: none !important; } .bz-story-node { background: var(--bz-cyan); } }
+
+/* Phase 5B: shared button micro-interactions (hover arrow 4px, cyan border, press, electric focus). */
+.bz-action { transition: background-color .2s, color .2s, border-color .2s, transform .2s; border: 1px solid transparent; }
+.bz-action:hover { border-color: var(--bz-cyan); }
+.bz-action:active { transform: scale(0.98); }
+.bz-action:focus-visible, .btn-bz:focus-visible { outline: 2px solid var(--bz-electric); outline-offset: 3px; }
+.bz-action svg { transition: transform .2s cubic-bezier(.215,.61,.355,1); }
+.bz-action:hover svg { transform: translateX(4px); }
+
+/* Hero: SSR planet placeholder shown before WebGL, cross-faded out in 400 ms. */
+.hz-planet-ssr { transition: opacity .4s ease-out; }
+.hz-canvas { opacity: 0; transition: opacity .4s ease-out; }
+.hz-canvas.is-ready { opacity: 1; }
+/* Keeps hero copy AA-legible over the globe throughout the scroll. */
+.hz-legibility { background: radial-gradient(ellipse at center, color-mix(in oklab, var(--bz-white) 72%, transparent) 0%, color-mix(in oklab, var(--bz-white) 40%, transparent) 45%, transparent 75%); }
+
+/* Wave cursor: fine pointer only; never hides the native cursor or blocks clicks. */
+.bz-cursor { position: fixed; left: 0; top: 0; z-index: 90; width: 24px; height: 24px; margin: -12px 0 0 -12px; border-radius: 9999px; border: 1.5px solid var(--bz-cyan); pointer-events: none; opacity: 0; transition: opacity .2s, scale .2s; will-change: transform; }
+.bz-cursor.is-visible { opacity: .7; }
+.bz-cursor.is-hover { scale: 1.6; }
+
+/* Global reduced motion + user "Pausar animações" switch. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+  .animate-pulse-line, .bz-cursor { animation: none !important; display: none; }
+}
+html.bz-motion-paused *, html.bz-motion-paused *::before, html.bz-motion-paused *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+html.bz-motion-paused .bz-cursor { display: none; }
