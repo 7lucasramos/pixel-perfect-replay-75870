@@ -28,3 +28,8 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+## Project rules
+- Hero animation: GSAP ScrollTrigger writes scroll progress into a shared non-React object (`src/components/hero/useHeroProgress.ts`); the R3F Globe only reads it in useFrame — keeps scroll sync without React re-renders.
+- Stack is TanStack Start + React 19, so R3F v9 / drei v10 and file routes replace the brief's React 18 / react-router-dom — the template router is fixed.
+- Editable site copy (headline, nav) lives in `src/lib/site.ts`; never invent contact data, specs or clients.
