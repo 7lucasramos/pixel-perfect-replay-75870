@@ -39,3 +39,7 @@ use the editor.
 - Product and case sources live in dedicated content modules, with reusable views and additive products.css; parent routes render Outlet and index leaves own metadata to isolate detail pages.
 - Product loaders return only the whitelisted slug, not technical data, so hidden manual values are never serialized into server-rendered HTML; search validation and the shared visibility rule gate preview rendering.
 - Case demonstration is dynamically imported only behind import.meta.env.DEV, keeping fictional data out of production rendering.
+- Restricted manual specs live only in `src/lib/manual-specs.server.ts`, served by the `getManualSpecs` server function gated by `SHOW_MANUAL_SPECS` (or DEV preview); client modules never hold those values, so they never ship in browser bundles.
+- Globe points are precomputed binaries in `public/data/*.bin` decoded by `loadGlobePoints`; no geo libraries run in the browser.
+- Contact anti-spam (honeypot, 3 s minimum, salted IP-hash rate limit, global breaker) runs server-side via the `contact_rate_status` security-definer RPC, keeping anonymous INSERT-only access with no public reads.
+- GSAP is loaded through `loadGsap()` in `src/lib/motion.ts` from shared components so non-hero routes don't pay for it upfront; the motion pause preference also lives there.
