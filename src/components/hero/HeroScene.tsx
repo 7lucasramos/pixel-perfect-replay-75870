@@ -51,15 +51,16 @@ export function HeroScene() {
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ paused: true, defaults: { ease: "none" } });
       tl.to([".hz-eyebrow", ".hz-scroll"], { opacity: 0, y: -10, duration: 0.1 }, 0.15)
+        // Phase A: only the complete B of the official logo (clipped), centred.
         .fromTo(
-          ".hz-symbol",
-          { opacity: 0, scale: 0.7, filter: lite ? "none" : "blur(12px)" },
+          ".hz-logo",
+          { opacity: 0, scale: 0.7, xPercent: 40.8, transformOrigin: "9.2% 50%", clipPath: "inset(0 81.5% 0 0)", filter: lite ? "none" : "blur(12px)" },
           { opacity: 1, scale: 1, filter: lite ? "none" : "blur(0px)", duration: 0.11, ease: "power2.out" },
           0.55,
         )
         .fromTo(".hz-wave", { opacity: 0.7, scale: 0.6 }, { opacity: 0, scale: 2.4, duration: 0.12, stagger: 0.04, ease: "power1.out", immediateRender: false }, 0.56)
-        .fromTo(".hz-logo", { opacity: 0, clipPath: "inset(0 100% 0 0)" }, { opacity: 1, clipPath: "inset(0 0% 0 0)", duration: 0.12, ease: "power3.out" }, 0.64)
-        .to(".hz-symbol", { opacity: 0, duration: 0.06 }, 0.68)
+        // Phase B: reveal ONZAI / SYSTEM from the B while recentring the full logo.
+        .to(".hz-logo", { clipPath: "inset(0 0% 0 0)", xPercent: 0, duration: 0.12, ease: "power3.out" }, 0.66)
         .fromTo(".hz-headline", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.08, ease: "power2.out" }, 0.72)
         .fromTo(".hz-line", { opacity: 0, scaleX: 0 }, { opacity: 1, scaleX: 1, duration: 0.06 }, 0.74)
         .to(".hz-grid-dense", { opacity: 1, duration: 0.2 }, 0.8)
