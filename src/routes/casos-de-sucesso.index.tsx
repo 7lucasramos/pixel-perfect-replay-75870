@@ -8,7 +8,7 @@ import { institutionalHead, useDocumentTitle } from "@/hooks/useDocumentTitle";
 const Demo = import.meta.env.DEV ? lazy(() => import("@/components/cases/DemoCase").then(module => ({ default: module.DemoCase }))) : null;
 export const Route = createFileRoute("/casos-de-sucesso/")({
   validateSearch: (search: Record<string, unknown>): { demo?: string } => (search["demo"] === "case" ? { demo: "case" } : {}),
-  head: () => institutionalHead(SEO.cases.title, SEO.cases.description),
+  head: () => institutionalHead(SEO.cases.title, SEO.cases.description, "/casos-de-sucesso"),
   component: CasesPage,
 });
 function CasesPage() {

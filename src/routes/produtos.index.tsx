@@ -4,8 +4,9 @@ import { products } from "@/content/products";
 import { ProductCard } from "@/components/products/ProductCard";
 import { ContactCTA, PageIntro } from "@/components/institutional/Shared";
 import { institutionalHead } from "@/hooks/useDocumentTitle";
+import productsCss from "../products.css?url";
 export const Route = createFileRoute("/produtos/")({
-  head: () => institutionalHead("Produtos | Bonzai System", "Sistemas profissionais Bonzai. Engenharia e som de alto padrão para projetos profissionais."),
+  head: () => ({ ...institutionalHead("Produtos | Bonzai System", "Sistemas profissionais Bonzai. Engenharia e som de alto padrão para projetos profissionais.", "/produtos"), links: [...institutionalHead("", "", "/produtos").links, { rel: "stylesheet", href: productsCss }] }),
   component: ProductsPage,
 });
 function ProductsPage() {

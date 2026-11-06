@@ -2,12 +2,13 @@ import { createFileRoute } from "@tanstack/react-router";
 import { AcousticScene } from "@/components/acoustics/AcousticScene";
 import { ContactCTA, PageIntro } from "@/components/institutional/Shared";
 import { Reveal } from "@/components/institutional/Motion";
+import { institutionalHead } from "@/hooks/useDocumentTitle";
 
 const TITLE = "Tecnologia | Bonzai System";
 const DESCRIPTION = "Representação visual da distribuição sonora em sistemas de sonorização profissionais.";
 
 export const Route = createFileRoute("/tecnologia")({
-  head: () => ({ meta: [{ title: TITLE }, { name: "description", content: DESCRIPTION }, { property: "og:title", content: TITLE }, { property: "og:description", content: DESCRIPTION }, { property: "og:type", content: "website" }, { name: "twitter:card", content: "summary_large_image" }] }),
+  head: () => institutionalHead(TITLE, DESCRIPTION, "/tecnologia"),
   component: Technology,
 });
 

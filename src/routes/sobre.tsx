@@ -5,7 +5,7 @@ import { COPY, SEO } from "@/content/site";
 import { institutionalHead, useDocumentTitle } from "@/hooks/useDocumentTitle";
 
 export const Route = createFileRoute("/sobre")({
-  head: () => institutionalHead(SEO.about.title, SEO.about.description),
+  head: () => institutionalHead(SEO.about.title, SEO.about.description, "/sobre"),
   component: AboutPage,
 });
 function AboutPage() {

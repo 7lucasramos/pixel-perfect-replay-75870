@@ -92,8 +92,8 @@ export const COPY = {
  submit: "Enviar pedido", sending: "Enviando pedido…", error: "Não foi possível enviar seu pedido. Tente novamente.",
 } as const;
 export const SEO = {
- about: { title: "Sobre a Bonzai System", description: "Conheça a história, as raízes e o compromisso da Bonzai System com o som e suas pessoas." },
- solutions: { title: "Soluções Bonzai System", description: "Conheça as aplicações dos sistemas Bonzai para diferentes tipos de projeto." },
+ about: { title: "Sobre | Bonzai System", description: "Conheça a história, as raízes e o compromisso da Bonzai System com o som e suas pessoas." },
+ solutions: { title: "Soluções | Bonzai System", description: "Conheça as aplicações dos sistemas Bonzai para diferentes tipos de projeto." },
  cases: { title: "Casos de sucesso | Bonzai System", description: "Projetos e aplicações Bonzai. Os casos reais serão publicados aqui." },
  contact: { title: "Contato | Bonzai System", description: "Converse com a equipe Bonzai System sobre o seu projeto de sonorização." },
 };
