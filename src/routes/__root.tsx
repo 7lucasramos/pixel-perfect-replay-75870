@@ -19,6 +19,7 @@ import { RouteTransition } from "@/components/institutional/RouteTransition";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { WaveCursor } from "@/components/layout/WaveCursor";
 
 function NotFoundComponent() {
   return <SiteNotFound />;
@@ -108,6 +109,7 @@ function RootComponent() {
       <Header />
       <RouteTransition><Outlet /></RouteTransition>
       <Footer />
+      <WaveCursor />
     </QueryClientProvider>
   );
 }
