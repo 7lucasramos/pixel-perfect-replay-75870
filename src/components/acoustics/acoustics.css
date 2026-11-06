@@ -31,6 +31,7 @@
 .ac-mobile-layers { display: none; }
 .ac-layer-sheet { color: var(--bz-white); background: var(--bz-graphite); border-color: var(--bz-cyan); border-radius: 8px; }
 .ac-explore { min-height: 90svh; }
+@media (min-width: 768px) and (max-width: 1023px) { .ac-labels { font-size: 32px; } }
 @media (max-width: 767px) {
   .ac-layout { display: block; }
   .ac-canvas { aspect-ratio: 4 / 3; }
@@ -43,7 +44,8 @@
   .ac-progress-block { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0,1fr) 104px; align-items: center; gap: 0 8px; }
   .ac-progress-block label { grid-column: 1/-1; margin: 0; }
   .ac-badge { top: 12px; left: 12px; font-size: 12px; }
-  .ac-layer-sheet { top: auto; bottom: 0; left: 0; right: 0; width: 100%; max-width: none; transform: none; border-radius: 8px 8px 0 0; }
+  .ac-labels { font-size: 36px; }
+  .ac-layer-sheet { top: auto; bottom: 0; left: 0; right: 0; width: 100%; max-width: none; transform: none; translate: none; animation: none; border-radius: 8px 8px 0 0; }
   .ac-explore { min-height: auto; }
 }
 @media (prefers-reduced-motion: reduce) { .ac-ray-group { transition: none; } }

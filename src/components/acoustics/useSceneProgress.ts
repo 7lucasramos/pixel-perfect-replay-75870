@@ -4,13 +4,13 @@ import { beamProgress, clamp, DURATION, stage, type View } from "./scene-config"
 
 export function paintScene(root: HTMLElement, p: number, phase: number, reduced: boolean) {
   root.querySelectorAll<SVGLineElement>("[data-beam]").forEach(line => {
-    const amount = beamProgress(p, Number(line.dataset.index), Number(line.dataset.count), Number(line.dataset.source));
+    const amount = beamProgress(p, Number(line.dataset['index']), Number(line.dataset['count']), Number(line.dataset['source']));
     line.setAttribute("stroke-dashoffset", String(1 - amount));
   });
   root.querySelectorAll("[data-coverage]").forEach(el => el.setAttribute("opacity", String(stage(p, .35, .8))));
   root.querySelectorAll("[data-overlap], [data-labels]").forEach(el => el.setAttribute("opacity", String(stage(p, .6, 1))));
   root.querySelectorAll<SVGCircleElement>("[data-wave]").forEach(el => {
-    const offset = Number(el.dataset.phase);
+    const offset = Number(el.dataset['phase']);
     const travel = reduced ? .18 + offset * .8 : (phase + offset) % 1;
     el.setAttribute("r", String(travel * 1050));
     el.setAttribute("opacity", String(p > .05 ? (1 - travel) * .32 : 0));
@@ -51,10 +51,10 @@ export function useSceneProgress(root: RefObject<HTMLDivElement | null>, slider:
     observer.observe(element);
     const ctx = gsap.context(() => { update(); }, element);
     const tick = (_time: number, delta: number) => {
-      if (!visible.current || hidden || !playingRef.current || reduced) return;
+      if (!visible.current || hidden || !playingRef.current) return;
       const dt = Math.min(delta / 1000, .05);
       progress.current = clamp(progress.current + dt / DURATION);
-      phase.current = (phase.current + dt / 3.5) % 1;
+      if (!reduced) phase.current = (phase.current + dt / 3.5) % 1;
       if (loop && progress.current >= 1) progress.current = 0;
       update();
     };
