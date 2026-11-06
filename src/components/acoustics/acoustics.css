@@ -18,7 +18,7 @@
 .ac-control-heading { display: block; font: 12px/1.6 var(--font-mono); margin-bottom: 12px; color: var(--bz-ice); }
 .ac-view-block,.ac-desktop-layers { margin-bottom: 28px; }
 .ac-segment { display: flex; gap: 4px; border-bottom: 1px solid var(--bz-graphite); padding-bottom: 8px; }
-.ac-controls .ac-control,.ac-layer-sheet .ac-control { color: var(--bz-white); background: transparent; min-height: 48px; border-radius: 4px; font-size: 12px; padding: 10px 12px; box-shadow: none; }
+.ac-controls .ac-control,.ac-layer-sheet .ac-control { min-width: 48px; color: var(--bz-white); background: transparent; min-height: 48px; border-radius: 4px; font-size: 12px; padding: 10px 12px; box-shadow: none; }
 .ac-control[aria-pressed=true] { background: var(--bz-graphite); color: var(--bz-cyan); }
 .ac-control:hover { background: var(--bz-graphite); color: var(--bz-cyan); }
 .ac-control:focus-visible,.ac-slider:focus-visible { outline: 2px solid var(--bz-electric); outline-offset: 3px; }
