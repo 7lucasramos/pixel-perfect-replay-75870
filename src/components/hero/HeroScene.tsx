@@ -57,7 +57,7 @@ export function HeroScene() {
           { opacity: 1, scale: 1, filter: lite ? "none" : "blur(0px)", duration: 0.11, ease: "power2.out" },
           0.55,
         )
-        .fromTo(".hz-wave", { opacity: 0.7, scale: 0.6 }, { opacity: 0, scale: 2.4, duration: 0.12, stagger: 0.04, ease: "power1.out" }, 0.56)
+        .fromTo(".hz-wave", { opacity: 0.7, scale: 0.6 }, { opacity: 0, scale: 2.4, duration: 0.12, stagger: 0.04, ease: "power1.out", immediateRender: false }, 0.56)
         .fromTo(".hz-logo", { opacity: 0, clipPath: "inset(0 100% 0 0)" }, { opacity: 1, clipPath: "inset(0 0% 0 0)", duration: 0.12, ease: "power3.out" }, 0.64)
         .to(".hz-symbol", { opacity: 0, duration: 0.06 }, 0.68)
         .fromTo(".hz-headline", { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.08, ease: "power2.out" }, 0.72)
