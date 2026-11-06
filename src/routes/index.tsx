@@ -6,26 +6,26 @@ import { TransitionBand } from "@/components/institutional/Motion";
 import { TechTeaser, ProductsTeaser, CasesTeaser } from "@/components/institutional/Teasers";
 import { Solutions } from "@/components/institutional/Solutions";
 import { ContactCTA } from "@/components/institutional/Shared";
+import { absoluteUrl, institutionalHead } from "@/hooks/useDocumentTitle";
+import { GLOBE_DATA } from "@/components/hero/landPoints";
+import productsCss from "../products.css?url";
 
 const TITLE = "Bonzai System | Sistemas profissionais de sonorização";
 const DESC = "Bonzai System: engenharia e sistemas profissionais de sonorização de alto padrão.";
 
 export const Route = createFileRoute("/")({
   head: () => ({
-    meta: [
-      { title: TITLE },
-      { name: "description", content: DESC },
-      { property: "og:title", content: TITLE },
-      { property: "og:description", content: DESC },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-      { property: "og:image", content: "https://pixel-perfect-replay-75870.lovable.app/og-image.png" },
-      { name: "twitter:image", content: "https://pixel-perfect-replay-75870.lovable.app/og-image.png" },
+    ...institutionalHead(TITLE, DESC, "/"),
+    links: [
+      ...institutionalHead(TITLE, DESC, "/").links,
+      { rel: "stylesheet", href: productsCss },
+      { rel: "preload", href: GLOBE_DATA.land, as: "fetch", crossOrigin: "anonymous" },
+      { rel: "preload", href: GLOBE_DATA.ocean, as: "fetch", crossOrigin: "anonymous" },
     ],
     scripts: [
       {
         type: "application/ld+json",
-        children: JSON.stringify({ "@context": "https://schema.org", "@type": "Organization", name: "Bonzai System" }),
+        children: JSON.stringify({ "@context": "https://schema.org", "@type": "Organization", name: "Bonzai System", url: absoluteUrl("/"), logo: absoluteUrl("/logo-bonzai.png") }),
       },
     ],
   }),
