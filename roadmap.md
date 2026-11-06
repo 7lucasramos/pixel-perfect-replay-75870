@@ -1,3 +1,8 @@
+# Fase 4
+- [ ] Produtos, palco com foto anexada, configuração e dados condicionais.
+- [ ] Casos, demonstração restrita, home, navegação e contato pré-preenchido.
+- [ ] Testes de regras e verificação em 390, 768 e 1440.
+
 # Fase 3
 - [x] Cena acústica conceitual com vistas, camadas, progresso e acessibilidade.
 - [x] Página Tecnologia e cena compacta na home, preservando fases aprovadas.
