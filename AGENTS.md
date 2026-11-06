@@ -35,3 +35,4 @@ use the editor.
 - Editable institutional copy and constants live in `src/content/site.ts`; `src/lib/site.ts` re-exports hero constants to preserve approved imports.
 - Phase 2 reusable sections and motion live in `src/components/institutional` and additive `src/institutional.css`; this isolates the approved hero and token system.
 - Contact submissions use a Zod-validated public server function with an anonymous INSERT-only client; no public read path or service-role bypass is needed.
+- Acoustic visualization stays in src/components/acoustics with inline SVG and additive CSS; GSAP/refs own frame progress while React owns controls, preserving the approved WebGL hero and tokens. Technology remains a TanStack file route, not src/pages.

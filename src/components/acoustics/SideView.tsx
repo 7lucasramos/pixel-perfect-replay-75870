@@ -1,0 +1,16 @@
+import { counts, type ViewProps } from "./scene-config";
+
+export function SideView({ id, lite, reduced, selected, onSelect, interactive }: ViewProps) {
+  const n = counts(lite);
+  return <svg viewBox="0 0 1000 520" className="ac-svg" aria-label="Vista lateral da distribuição sonora conceitual">
+    <defs><linearGradient id={`${id}-side-beam`}><stop stopColor="var(--bz-cyan)" stopOpacity=".9" /><stop offset="1" stopColor="var(--bz-cyan)" stopOpacity=".25" /></linearGradient><linearGradient id={`${id}-side-fill`}><stop stopColor="var(--bz-cyan)" stopOpacity=".18" /><stop offset="1" stopColor="var(--bz-cyan)" stopOpacity=".04" /></linearGradient><clipPath id={`${id}-side-fan`}><path d="M160 175 L940 420 L260 420 Z" /></clipPath></defs>
+    <g data-layer="grid" className="ac-grid"><path d="M80 420 H960" stroke="var(--bz-cyan)" strokeOpacity=".4" />{Array.from({ length: 19 }, (_, i) => <g key={i} transform={`translate(${295 + i * 33} 420)`} opacity=".3" stroke="var(--bz-white)" fill="none"><circle cy="-38" r="5" /><path d="M0 -32 V-10 M-8 -24 H8 M0 -10 L-7 0 M0 -10 L7 0" /></g>)}</g>
+    <g data-layer="coverage"><path data-coverage opacity="0" d="M160 175 L940 420 L260 420 Z" fill={`url(#${id}-side-fill)`} /></g>
+    <g data-layer="beams" className={selected === 0 ? "ac-ray-group ac-highlight" : "ac-ray-group"}>{Array.from({ length: n.beams }, (_, i) => <line key={i} data-beam data-index={i} data-count={n.beams} data-source="0" pathLength="1" strokeDasharray="1" strokeDashoffset="1" x1="160" y1="175" x2={260 + i * 680 / (n.beams - 1)} y2="420" stroke={`url(#${id}-side-beam)`} />)}</g>
+    <g data-layer="waves" clipPath={`url(#${id}-side-fan)`}>{Array.from({ length: reduced ? 3 : n.waves }, (_, i) => <circle key={i} data-wave data-phase={i / (reduced ? 3 : n.waves)} cx="160" cy="175" r="0" fill="none" stroke="var(--bz-cyan)" opacity="0" />)}</g>
+    <g data-layer="sources"><g className={`ac-source ${selected === 0 ? "ac-selected" : ""}`} role={interactive ? "button" : undefined} tabIndex={interactive ? 0 : undefined} aria-label="Fonte A: origem do som neste cenário ilustrativo" aria-pressed={interactive ? selected === 0 : undefined} onPointerEnter={e => interactive && e.pointerType === "mouse" && onSelect(0)} onPointerLeave={e => interactive && e.pointerType === "mouse" && onSelect(null)} onFocus={() => interactive && onSelect(0)} onBlur={() => interactive && onSelect(null)} onClick={e => { e.stopPropagation(); if (interactive) onSelect(selected === 0 ? null : 0); }} onKeyDown={e => { if (interactive && (e.key === " " || e.key === "Enter")) { e.preventDefault(); onSelect(selected === 0 ? null : 0); } }}>
+      <rect className="ac-source-target" x="102" y="90" width="90" height="155" rx="6" /><path d="M140 120 V65 H95" fill="none" stroke="var(--bz-white)" opacity=".4" />{Array.from({ length: 8 }, (_, i) => <rect key={i} x={128 + i * i * .35} y={120 + i * 14} width="28" height="12" rx="2" className="ac-source-box" />)}
+    </g></g>
+    <g data-layer="labels"><g data-labels opacity="0" className="ac-labels"><text x="96" y="280">Fonte A</text><text x="570" y="480">Área de público</text><text x="82" y="458">Piso</text></g></g>
+  </svg>;
+}

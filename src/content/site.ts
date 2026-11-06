@@ -78,7 +78,7 @@ export const COPY = {
  photo: "Foto institucional (a enviar)", solutionPhoto: "Foto a enviar", productPhoto: "Foto do produto (a enviar)",
  storyEyebrow: "Sobre a Bonzai", aboutTitle: "Som com identidade, construído com proximidade",
  techEyebrow: "Tecnologia e engenharia acústica", techTitle: "Som projetado, não improvisado.",
- techText: "Visualize como um sistema distribui o som sobre uma área. Uma experiência interativa está chegando.",
+ techText: "Uma representação conceitual de como o som se distribui sobre uma área.",
  conceptual: "Visualização conceitual", techButton: "Conhecer a tecnologia",
  solutionsTitle: "Soluções para cada tipo de projeto", solutionsPageTitle: "Aplicações dos sistemas Bonzai", solutionsButton: "Ver todas as soluções",
  productsTitle: "Sistemas profissionais Bonzai", product: "Bonzai Mini", productText: "Um dos sistemas da linha Bonzai.", productsButton: "Conhecer os produtos",
