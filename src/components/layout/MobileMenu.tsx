@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { Link, useLocation } from "@tanstack/react-router";
 import { NAV } from "@/lib/site";
+import { Logo } from "@/components/brand/Logo";
 
 export function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
   const { pathname } = useLocation();
@@ -47,7 +48,8 @@ export function MobileMenu({ open, onClose }: { open: boolean; onClose: () => vo
       aria-label="Menu"
       className="fixed inset-0 z-[60] flex flex-col bg-background lg:hidden"
     >
-      <div className="container-bz flex h-16 items-center justify-end">
+      <div className="container-bz flex h-16 items-center justify-between">
+        <Link to="/" onClick={onClose} aria-label="Bonzai System — início"><Logo className="h-6" /></Link>
         <button
           type="button"
           onClick={onClose}

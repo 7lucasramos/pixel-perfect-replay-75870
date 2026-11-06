@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "@tanstack/react-router";
-import logo from "@/assets/brand/bonzai-logo-preto-ciano.webp.asset.json";
-import symbol from "@/assets/brand/bonzai-simbolo-ciano.png.asset.json";
+import { Logo } from "@/components/brand/Logo";
 import { NAV } from "@/lib/site";
 import { useHeroRevealed } from "@/components/hero/useHeroProgress";
 import { MobileMenu } from "./MobileMenu";
@@ -30,14 +29,7 @@ export function Header() {
     >
       <div className="container-bz flex h-full items-center justify-between gap-6">
         <Link to="/" className="flex items-center gap-3" aria-label="Bonzai System — início">
-          <img src={symbol.url} alt="" className="h-7 w-auto" width={427} height={523} />
-          <img
-            src={logo.url}
-            alt="Bonzai System"
-            className={`h-6 w-auto transition-opacity duration-500 ${showLogo ? "opacity-100" : "opacity-0"}`}
-            width={1920}
-            height={594}
-          />
+          <Logo className={`h-6 transition-opacity duration-500 lg:h-7 ${showLogo ? "opacity-100" : "opacity-0"}`} />
         </Link>
 
         <nav aria-label="Principal" className="hidden items-center gap-7 lg:flex">

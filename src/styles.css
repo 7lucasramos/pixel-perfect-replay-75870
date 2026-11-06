@@ -192,7 +192,6 @@
 }
 
 /* Hero initial states (animated by GSAP). Static mode reveals them. */
-.hz-symbol,
 .hz-logo,
 .hz-headline,
 .hz-line,
@@ -200,7 +199,7 @@
   opacity: 0;
 }
 .hz-logo {
-  clip-path: inset(0 100% 0 0);
+  clip-path: inset(0 81.5% 0 0);
 }
 .hz-line {
   transform: scaleX(0);
