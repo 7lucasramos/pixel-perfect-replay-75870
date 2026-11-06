@@ -72,8 +72,8 @@ export const SOLUTIONS = [
 ] as const;
 export const PROFILES = ["Empresa de locação de áudio", "Integrador", "Produtor de eventos", "Responsável por projeto de sonorização", "Profissional de áudio", "Outro"] as const;
 export const PROJECT_TYPES = ["Evento ou produção", "Instalação permanente", "Sistema de sonorização", "Projeto personalizado", "Outro"] as const;
-export type CaseStudy = { id: string; photo: string; local: string; application: string; system: string; description: string; authorizedResult: string };
-export const cases: CaseStudy[] = [];
+export { cases } from "./cases";
+export type { CaseStudy } from "./cases";
 export const COPY = {
  photo: "Foto institucional (a enviar)", solutionPhoto: "Foto a enviar", productPhoto: "Foto do produto (a enviar)",
  storyEyebrow: "Sobre a Bonzai", aboutTitle: "Som com identidade, construído com proximidade",

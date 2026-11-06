@@ -16,6 +16,10 @@ import { Route as ProdutosRouteImport } from './routes/produtos'
 import { Route as SobreRouteImport } from './routes/sobre'
 import { Route as SolucoesRouteImport } from './routes/solucoes'
 import { Route as TecnologiaRouteImport } from './routes/tecnologia'
+import { Route as CasosDeSucessoIndexRouteImport } from './routes/casos-de-sucesso.index'
+import { Route as CasosDeSucessoSlugRouteImport } from './routes/casos-de-sucesso.$slug'
+import { Route as ProdutosIndexRouteImport } from './routes/produtos.index'
+import { Route as ProdutosSlugRouteImport } from './routes/produtos.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -52,34 +56,64 @@ const TecnologiaRoute = TecnologiaRouteImport.update({
   path: '/tecnologia',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CasosDeSucessoIndexRoute = CasosDeSucessoIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => CasosDeSucessoRoute,
+} as any)
+const CasosDeSucessoSlugRoute = CasosDeSucessoSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => CasosDeSucessoRoute,
+} as any)
+const ProdutosIndexRoute = ProdutosIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ProdutosRoute,
+} as any)
+const ProdutosSlugRoute = ProdutosSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => ProdutosRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/casos-de-sucesso': typeof CasosDeSucessoRoute
+  '/casos-de-sucesso': typeof CasosDeSucessoRouteWithChildren
   '/contato': typeof ContatoRoute
-  '/produtos': typeof ProdutosRoute
+  '/produtos': typeof ProdutosRouteWithChildren
   '/sobre': typeof SobreRoute
   '/solucoes': typeof SolucoesRoute
   '/tecnologia': typeof TecnologiaRoute
+  '/casos-de-sucesso/$slug': typeof CasosDeSucessoSlugRoute
+  '/produtos/$slug': typeof ProdutosSlugRoute
+  '/casos-de-sucesso/': typeof CasosDeSucessoIndexRoute
+  '/produtos/': typeof ProdutosIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/casos-de-sucesso': typeof CasosDeSucessoRoute
   '/contato': typeof ContatoRoute
-  '/produtos': typeof ProdutosRoute
   '/sobre': typeof SobreRoute
   '/solucoes': typeof SolucoesRoute
   '/tecnologia': typeof TecnologiaRoute
+  '/casos-de-sucesso/$slug': typeof CasosDeSucessoSlugRoute
+  '/produtos/$slug': typeof ProdutosSlugRoute
+  '/casos-de-sucesso': typeof CasosDeSucessoIndexRoute
+  '/produtos': typeof ProdutosIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/casos-de-sucesso': typeof CasosDeSucessoRoute
+  '/casos-de-sucesso': typeof CasosDeSucessoRouteWithChildren
   '/contato': typeof ContatoRoute
-  '/produtos': typeof ProdutosRoute
+  '/produtos': typeof ProdutosRouteWithChildren
   '/sobre': typeof SobreRoute
   '/solucoes': typeof SolucoesRoute
   '/tecnologia': typeof TecnologiaRoute
+  '/casos-de-sucesso/$slug': typeof CasosDeSucessoSlugRoute
+  '/produtos/$slug': typeof ProdutosSlugRoute
+  '/casos-de-sucesso/': typeof CasosDeSucessoIndexRoute
+  '/produtos/': typeof ProdutosIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -91,15 +125,21 @@ export interface FileRouteTypes {
     | '/sobre'
     | '/solucoes'
     | '/tecnologia'
+    | '/casos-de-sucesso/$slug'
+    | '/produtos/$slug'
+    | '/casos-de-sucesso/'
+    | '/produtos/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/casos-de-sucesso'
     | '/contato'
-    | '/produtos'
     | '/sobre'
     | '/solucoes'
     | '/tecnologia'
+    | '/casos-de-sucesso/$slug'
+    | '/produtos/$slug'
+    | '/casos-de-sucesso'
+    | '/produtos'
   id:
     | '__root__'
     | '/'
@@ -109,13 +149,17 @@ export interface FileRouteTypes {
     | '/sobre'
     | '/solucoes'
     | '/tecnologia'
+    | '/casos-de-sucesso/$slug'
+    | '/produtos/$slug'
+    | '/casos-de-sucesso/'
+    | '/produtos/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  CasosDeSucessoRoute: typeof CasosDeSucessoRoute
+  CasosDeSucessoRoute: typeof CasosDeSucessoRouteWithChildren
   ContatoRoute: typeof ContatoRoute
-  ProdutosRoute: typeof ProdutosRoute
+  ProdutosRoute: typeof ProdutosRouteWithChildren
   SobreRoute: typeof SobreRoute
   SolucoesRoute: typeof SolucoesRoute
   TecnologiaRoute: typeof TecnologiaRoute
@@ -172,14 +216,70 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TecnologiaRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/casos-de-sucesso/': {
+      id: '/casos-de-sucesso/'
+      path: '/'
+      fullPath: '/casos-de-sucesso/'
+      preLoaderRoute: typeof CasosDeSucessoIndexRouteImport
+      parentRoute: typeof CasosDeSucessoRoute
+    }
+    '/casos-de-sucesso/$slug': {
+      id: '/casos-de-sucesso/$slug'
+      path: '/$slug'
+      fullPath: '/casos-de-sucesso/$slug'
+      preLoaderRoute: typeof CasosDeSucessoSlugRouteImport
+      parentRoute: typeof CasosDeSucessoRoute
+    }
+    '/produtos/': {
+      id: '/produtos/'
+      path: '/'
+      fullPath: '/produtos/'
+      preLoaderRoute: typeof ProdutosIndexRouteImport
+      parentRoute: typeof ProdutosRoute
+    }
+    '/produtos/$slug': {
+      id: '/produtos/$slug'
+      path: '/$slug'
+      fullPath: '/produtos/$slug'
+      preLoaderRoute: typeof ProdutosSlugRouteImport
+      parentRoute: typeof ProdutosRoute
+    }
   }
 }
 
+interface CasosDeSucessoRouteChildren {
+  CasosDeSucessoSlugRoute: typeof CasosDeSucessoSlugRoute
+  CasosDeSucessoIndexRoute: typeof CasosDeSucessoIndexRoute
+}
+
+const CasosDeSucessoRouteChildren: CasosDeSucessoRouteChildren = {
+  CasosDeSucessoSlugRoute: CasosDeSucessoSlugRoute,
+  CasosDeSucessoIndexRoute: CasosDeSucessoIndexRoute,
+}
+
+const CasosDeSucessoRouteWithChildren = CasosDeSucessoRoute._addFileChildren(
+  CasosDeSucessoRouteChildren,
+)
+
+interface ProdutosRouteChildren {
+  ProdutosSlugRoute: typeof ProdutosSlugRoute
+  ProdutosIndexRoute: typeof ProdutosIndexRoute
+}
+
+const ProdutosRouteChildren: ProdutosRouteChildren = {
+  ProdutosSlugRoute: ProdutosSlugRoute,
+  ProdutosIndexRoute: ProdutosIndexRoute,
+}
+
+const ProdutosRouteWithChildren = ProdutosRoute._addFileChildren(
+  ProdutosRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  CasosDeSucessoRoute: CasosDeSucessoRoute,
+  CasosDeSucessoRoute: CasosDeSucessoRouteWithChildren,
   ContatoRoute: ContatoRoute,
-  ProdutosRoute: ProdutosRoute,
+  ProdutosRoute: ProdutosRouteWithChildren,
   SobreRoute: SobreRoute,
   SolucoesRoute: SolucoesRoute,
   TecnologiaRoute: TecnologiaRoute,
