@@ -1,7 +1,14 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { UnderConstruction, pageHead } from "@/components/layout/UnderConstruction";
+import { AboutStory } from "@/components/institutional/AboutStory";
+import { PageIntro, ContactCTA } from "@/components/institutional/Shared";
+import { COPY, SEO } from "@/content/site";
+import { institutionalHead, useDocumentTitle } from "@/hooks/useDocumentTitle";
 
 export const Route = createFileRoute("/sobre")({
-  head: () => pageHead("Sobre a Bonzai"),
-  component: () => <UnderConstruction title="Sobre a Bonzai" />,
+  head: () => institutionalHead(SEO.about.title, SEO.about.description),
+  component: AboutPage,
 });
+function AboutPage() {
+  useDocumentTitle(SEO.about.title, SEO.about.description);
+  return <main id="conteudo"><PageIntro eyebrow={COPY.storyEyebrow} title={COPY.aboutTitle} /><AboutStory /><ContactCTA /></main>;
+}

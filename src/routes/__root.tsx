@@ -11,6 +11,8 @@ import {
 import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
+import institutionalCss from "../institutional.css?url";
+import { RouteTransition } from "@/components/institutional/RouteTransition";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
@@ -88,6 +90,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         href: appCss,
       },
       { rel: "icon", href: "/favicon.png", type: "image/png" },
+      { rel: "stylesheet", href: institutionalCss },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
       {
@@ -129,7 +132,7 @@ function RootComponent() {
         Ir para o conteúdo
       </a>
       <Header />
-      <Outlet />
+      <RouteTransition><Outlet /></RouteTransition>
       <Footer />
     </QueryClientProvider>
   );

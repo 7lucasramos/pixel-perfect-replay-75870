@@ -1,7 +1,14 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { UnderConstruction, pageHead } from "@/components/layout/UnderConstruction";
+import { ContactForm } from "@/components/institutional/ContactForm";
+import { ContactChannels } from "@/components/institutional/Shared";
+import { COPY, SEO } from "@/content/site";
+import { institutionalHead, useDocumentTitle } from "@/hooks/useDocumentTitle";
 
 export const Route = createFileRoute("/contato")({
-  head: () => pageHead("Contato"),
-  component: () => <UnderConstruction title="Contato" />,
+  head: () => institutionalHead(SEO.contact.title, SEO.contact.description),
+  component: ContactPage,
 });
+function ContactPage() {
+  useDocumentTitle(SEO.contact.title, SEO.contact.description);
+  return <main id="conteudo" className="container-bz grid gap-16 pb-24 pt-36 lg:grid-cols-[.85fr_1.15fr] lg:gap-20 lg:pt-44"><div><p className="eyebrow">Contato</p><h1 className="bz-page-title mt-6">{COPY.contactTitle}</h1><p className="mt-7 text-lg leading-relaxed text-muted-foreground">{COPY.contactText}</p><div className="mt-10"><ContactChannels /></div></div><ContactForm /></main>;
+}

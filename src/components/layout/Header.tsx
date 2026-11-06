@@ -42,7 +42,7 @@ export function Header() {
 
         <nav aria-label="Principal" className="hidden items-center gap-7 lg:flex">
           {NAV.map((n) => (
-            <Link key={n.to} to={n.to} className="nav-link" activeOptions={{ exact: true }}>
+            <Link key={n.to} to={n.to} className="nav-link" activeOptions={{ exact: true }} aria-current={pathname === n.to ? "page" : undefined}>
               {n.label}
             </Link>
           ))}
