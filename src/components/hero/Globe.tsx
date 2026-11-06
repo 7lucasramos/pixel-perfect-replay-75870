@@ -521,8 +521,8 @@ export function Globe({ mode }: { mode: HeroMode }) {
               </group>
             ))}
           </group>
-          <mesh geometry={sphereGeo} material={atmoMats[1]} scale={1.04} renderOrder={-1} />
-          <mesh geometry={sphereGeo} material={atmoMats[0]} scale={1.12} renderOrder={-2} />
+          <mesh geometry={sphereGeo} material={atmoMats[1]!} scale={1.04} renderOrder={-1} />
+          <mesh geometry={sphereGeo} material={atmoMats[0]!} scale={1.12} renderOrder={-2} />
         </group>
         <group ref={system} rotation={[0.32, 0, -0.12]}>
           <points geometry={particles.geo} material={particles.mat} renderOrder={4} />
