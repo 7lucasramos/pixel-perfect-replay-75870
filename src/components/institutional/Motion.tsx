@@ -1,16 +1,19 @@
 import { useEffect, useRef, type ReactNode } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { loadGsap, motionReduced, MOTION } from "@/lib/motion";
 
 export function Reveal({ children, className = "" }: { children: ReactNode; className?: string }) {
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    gsap.registerPlugin(ScrollTrigger);
-    const ctx = gsap.context(() => {
-      gsap.from(ref.current?.querySelectorAll("[data-reveal]") ?? [], { opacity: 0, y: 24, stagger: .08, duration: .7, ease: "power2.out", scrollTrigger: { trigger: ref.current, start: "top 88%", once: true } });
-    }, ref);
-    return () => ctx.revert();
+    if (motionReduced()) return;
+    let cancelled = false, revert: (() => void) | undefined;
+    loadGsap().then(({ gsap }) => {
+      if (cancelled) return;
+      const ctx = gsap.context(() => {
+        gsap.from(ref.current?.querySelectorAll("[data-reveal]") ?? [], { opacity: 0, y: 24, stagger: MOTION.stagger, duration: .7, ease: "power2.out", scrollTrigger: { trigger: ref.current, start: "top 88%", once: true } });
+      }, ref);
+      revert = () => ctx.revert();
+    });
+    return () => { cancelled = true; revert?.(); };
   }, []);
   return <div ref={ref} className={className}>{children}</div>;
 }
