@@ -1,8 +1,9 @@
 import { useEffect, useRef } from "react";
-import { Link } from "@tanstack/react-router";
+import { Link, useLocation } from "@tanstack/react-router";
 import { NAV } from "@/lib/site";
 
 export function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const { pathname } = useLocation();
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -62,7 +63,8 @@ export function MobileMenu({ open, onClose }: { open: boolean; onClose: () => vo
             key={n.to}
             to={n.to}
             onClick={onClose}
-            activeOptions={{ exact: true }}
+            activeOptions={{ exact: n.to === "/" }}
+            aria-current={(pathname === n.to || (n.to !== "/" && pathname.startsWith(`${n.to}/`))) ? "page" : undefined}
             className="animate-menu-in font-display text-[28px] font-bold tracking-tight text-foreground data-[status=active]:text-bz-cyan"
             style={{ animationDelay: `${60 + i * 50}ms` }}
           >

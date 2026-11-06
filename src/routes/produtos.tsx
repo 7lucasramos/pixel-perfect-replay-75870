@@ -1,7 +1,5 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { UnderConstruction, pageHead } from "@/components/layout/UnderConstruction";
+import { createFileRoute, Outlet } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/produtos")({
-  head: () => pageHead("Produtos"),
-  component: () => <UnderConstruction title="Produtos" />,
+  component: () => <Outlet />,
 });

@@ -7,10 +7,11 @@ import { Button } from "@/components/ui/button";
 import { contactSchema, type ContactInput } from "@/lib/contact-schema";
 import { submitContact } from "@/lib/contact.functions";
 import { COPY, PROFILES, PROJECT_TYPES } from "@/content/site";
-export function ContactForm() {
+import { productContactDefaults } from "@/content/products";
+export function ContactForm({ productSlug }: { productSlug?: string | undefined }) {
  const [success, setSuccess] = useState(false), [failed, setFailed] = useState(false);
  const send = useServerFn(submitContact);
- const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<ContactInput>({ resolver: zodResolver(contactSchema), defaultValues: { nome: "", empresa: "", email: "", telefone: "", perfil: "", tipo_projeto: "", mensagem: "", consentimento: false, website: "" } });
+ const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<ContactInput>({ resolver: zodResolver(contactSchema), defaultValues: { nome: "", empresa: "", email: "", telefone: "", perfil: "", ...productContactDefaults(productSlug), consentimento: false, website: "" } });
  const onSubmit = async (data: ContactInput) => {
   setFailed(false);
   try { const result = await send({ data }); if (result.ok) setSuccess(true); else setFailed(true); } catch { setFailed(true); }

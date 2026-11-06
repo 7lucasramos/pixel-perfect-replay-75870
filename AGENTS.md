@@ -36,3 +36,6 @@ use the editor.
 - Phase 2 reusable sections and motion live in `src/components/institutional` and additive `src/institutional.css`; this isolates the approved hero and token system.
 - Contact submissions use a Zod-validated public server function with an anonymous INSERT-only client; no public read path or service-role bypass is needed.
 - Acoustic visualization stays in src/components/acoustics with inline SVG and additive CSS; GSAP/refs own frame progress while React owns controls, preserving the approved WebGL hero and tokens. Technology remains a TanStack file route, not src/pages.
+- Product and case sources live in dedicated content modules, with reusable views and additive products.css; parent routes render Outlet and index leaves own metadata to isolate detail pages.
+- Product loaders return only the whitelisted slug, not technical data, so hidden manual values are never serialized into server-rendered HTML; search validation and the shared visibility rule gate preview rendering.
+- Case demonstration is dynamically imported only behind import.meta.env.DEV, keeping fictional data out of production rendering.

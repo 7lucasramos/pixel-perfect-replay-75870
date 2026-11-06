@@ -32,7 +32,7 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   return (
-    <main>
+    <main id="conteudo">
       <HeroScene />
       <AboutOrigin />
       <TransitionBand kind="ice-white" />
