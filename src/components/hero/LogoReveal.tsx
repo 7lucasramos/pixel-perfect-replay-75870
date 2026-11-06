@@ -13,7 +13,7 @@ export function LogoReveal() {
               <circle className="hz-wave" cx="50" cy="50" r="30" fill="none" stroke="var(--bz-cyan)" strokeWidth="0.6" style={{ transformOrigin: "50% 50%" }} />
             </svg>
           </div>
-          <Logo className="hz-logo absolute inset-0 h-full w-full" loading="eager" />
+          <Logo className="hz-logo absolute inset-0 h-full w-full" loading="eager" sizes="(min-width: 1024px) min(56vw, 640px), 78vw" />
         </div>
         <h1 className="hz-headline mt-8 text-center font-display text-[clamp(14px,1.6vw,20px)] font-bold uppercase tracking-[0.12em] text-foreground">
           {HERO_HEADLINE}
