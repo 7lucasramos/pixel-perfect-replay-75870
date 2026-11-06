@@ -21,6 +21,7 @@ export type Database = {
           email: string
           empresa: string
           id: string
+          ip_hash: string | null
           mensagem: string
           nome: string
           perfil: string
@@ -33,6 +34,7 @@ export type Database = {
           email: string
           empresa?: string
           id?: string
+          ip_hash?: string | null
           mensagem: string
           nome: string
           perfil?: string
@@ -45,6 +47,7 @@ export type Database = {
           email?: string
           empresa?: string
           id?: string
+          ip_hash?: string | null
           mensagem?: string
           nome?: string
           perfil?: string
@@ -58,7 +61,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      contact_rate_status: { Args: { _ip_hash: string }; Returns: string }
     }
     Enums: {
       [_ in never]: never
