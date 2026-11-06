@@ -162,8 +162,6 @@ export function Globe({ mode }: { mode: HeroMode }) {
   const tilt = useRef<THREE.Group>(null);
   const spin = useRef<THREE.Group>(null);
   const system = useRef<THREE.Group>(null);
-  const orbitRefs = useRef<(THREE.Line | null)[]>([]);
-  const arcRefs = useRef<(THREE.Line | null)[]>([]);
   const markerRefs = useRef<(THREE.Group | null)[]>([]);
   const smooth = useRef(reduced ? 0.6 : heroProgress.value);
   const pointer = useRef({ x: 0, y: 0, tx: 0, ty: 0 });
@@ -300,7 +298,7 @@ export function Globe({ mode }: { mode: HeroMode }) {
         ...o,
         geo: circlePoints(o.r),
         mat: new THREE.LineBasicMaterial({ color: CYAN, transparent: true, opacity: 0, depthWrite: false }),
-      })),
+      })).map((x) => ({ ...x, line: new THREE.Line(x.geo, x.mat) })),
     [],
   );
 
@@ -363,7 +361,7 @@ export function Globe({ mode }: { mode: HeroMode }) {
     return list.map(([a, b]) => ({
       geo: arcGeometry(MARKERS[a]!, MARKERS[b]!),
       mat: new THREE.LineBasicMaterial({ color: CYAN, transparent: true, opacity: 0, depthWrite: false }),
-    }));
+    })).map((x) => ({ ...x, line: new THREE.Line(x.geo, x.mat) }));
   }, [lite]);
   const markers = useMemo(() => {
     const dotGeo = new THREE.CircleGeometry(0.018, 20);
@@ -416,7 +414,6 @@ export function Globe({ mode }: { mode: HeroMode }) {
 
     const s2 = inOut(seg(p, 0.15, 0.55));
     camera.position.z = 6 + 5 * s2;
-    camera.updateProjectionMatrix();
 
     const yStart = -vh / 2 - R / 3;
     const yEnd = 0.05 * vh;
@@ -454,8 +451,7 @@ export function Globe({ mode }: { mode: HeroMode }) {
       const k = reduced ? 1 : seg(p, 0.2 + i * 0.06, 0.45 + i * 0.06);
       o.mat.opacity = 0.35 * Math.min(1, k * 3) * fadeOut;
       o.geo.setDrawRange(0, Math.floor(161 * k));
-      const line = orbitRefs.current[i];
-      if (line && !reduced) line.rotation.y += (0.02 + i * 0.01) * dt;
+      if (!reduced) o.line.rotation.y += (0.02 + i * 0.01) * dt;
     });
     if (system.current && !reduced) system.current.rotation.y += 0.015 * dt;
 
@@ -507,13 +503,7 @@ export function Globe({ mode }: { mode: HeroMode }) {
             {oceanGeo && <points geometry={oceanGeo} material={oceanMat} renderOrder={2} />}
             {landGeo && <points geometry={landGeo} material={landMat} renderOrder={3} />}
             {arcs.map((a, i) => (
-              <primitive
-                key={`arc-${i}`}
-                object={new THREE.Line(a.geo, a.mat)}
-                ref={(el: THREE.Line | null) => {
-                  arcRefs.current[i] = el;
-                }}
-              />
+              <primitive key={`arc-${i}`} object={a.line} />
             ))}
             {markers.map((m, i) => (
               <group
@@ -543,12 +533,7 @@ export function Globe({ mode }: { mode: HeroMode }) {
           ))}
           {orbits.map((o, i) => (
             <group key={`orb-${i}`} rotation={[o.tilt * DEG, 0, 0]}>
-              <primitive
-                object={new THREE.Line(o.geo, o.mat)}
-                ref={(el: THREE.Line | null) => {
-                  orbitRefs.current[i] = el;
-                }}
-              />
+              <primitive object={o.line} />
             </group>
           ))}
         </group>
