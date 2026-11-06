@@ -7,9 +7,10 @@ export function Reveal({ children, className = "" }: { children: ReactNode; clas
     if (motionReduced()) return;
     let cancelled = false, revert: (() => void) | undefined;
     loadGsap().then(({ gsap }) => {
-      if (cancelled) return;
+      const targets = ref.current?.querySelectorAll("[data-reveal]");
+      if (cancelled || !targets?.length) return;
       const ctx = gsap.context(() => {
-        gsap.from(ref.current?.querySelectorAll("[data-reveal]") ?? [], { opacity: 0, y: 24, stagger: MOTION.stagger, duration: .7, ease: "power2.out", scrollTrigger: { trigger: ref.current, start: "top 88%", once: true } });
+        gsap.from(targets, { opacity: 0, y: 24, stagger: MOTION.stagger, duration: .7, ease: "power2.out", scrollTrigger: { trigger: ref.current, start: "top 88%", once: true } });
       }, ref);
       revert = () => ctx.revert();
     });

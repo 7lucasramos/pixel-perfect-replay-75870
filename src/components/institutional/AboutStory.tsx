@@ -10,7 +10,7 @@ export function AboutStory({ home = false }: { home?: boolean }) {
     const reduced = motionReduced();
     let cancelled = false, revert: (() => void) | undefined;
     loadGsap().then(({ gsap, ScrollTrigger }) => {
-    if (cancelled) return;
+    if (cancelled || !ref.current) return;
     const ctx = gsap.context(() => {
       if (!reduced) gsap.fromTo(".bz-story-progress", { scaleY: 0 }, { scaleY: 1, ease: "none", scrollTrigger: { trigger: ref.current, start: "top 65%", end: "bottom 65%", scrub: true } });
       ref.current?.querySelectorAll("article").forEach(article => {
