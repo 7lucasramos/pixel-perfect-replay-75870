@@ -2,21 +2,27 @@ import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { detectHeroMode, type HeroMode } from "./capabilities";
+import { initMotionPreference, isMotionPaused, onMotionPausedChange } from "@/lib/motion";
 import { heroProgress, setHeroRevealed } from "./useHeroProgress";
 import { LogoReveal } from "./LogoReveal";
 import { HERO_EYEBROW } from "@/lib/site";
 
 const GlobeCanvas = lazy(() => import("./GlobeCanvas"));
 
-function SvgPlanet() {
+function SvgPlanet({ className = "opacity-40" }: { className?: string }) {
   return (
-    <svg viewBox="0 0 200 200" className="absolute left-1/2 top-1/2 h-[38svh] w-[38svh] -translate-x-1/2 -translate-y-1/2 opacity-40" aria-hidden="true">
+    <svg viewBox="0 0 200 200" className={`absolute left-1/2 top-1/2 h-[38svh] w-[38svh] -translate-x-1/2 -translate-y-1/2 overflow-visible ${className}`} aria-hidden="true">
       <defs>
         <radialGradient id="bzp" cx="35%" cy="30%" r="75%">
           <stop offset="0%" stopColor="var(--bz-white)" />
           <stop offset="100%" stopColor="var(--bz-ice)" />
         </radialGradient>
+        <radialGradient id="bzhalo" cx="50%" cy="50%" r="50%">
+          <stop offset="70%" stopColor="var(--bz-cyan)" stopOpacity="0.22" />
+          <stop offset="100%" stopColor="var(--bz-cyan)" stopOpacity="0" />
+        </radialGradient>
       </defs>
+      <circle cx="100" cy="100" r="112" fill="url(#bzhalo)" />
       <circle cx="100" cy="100" r="80" fill="url(#bzp)" stroke="var(--bz-cyan)" strokeOpacity="0.5" />
       {[-50, -25, 0, 25, 50].map((y) => (
         <ellipse key={y} cx="100" cy={100 + y} rx={Math.sqrt(6400 - y * y)} ry="6" fill="none" stroke="var(--bz-cyan)" strokeOpacity="0.25" />
@@ -32,11 +38,25 @@ function SvgPlanet() {
 export function HeroScene() {
   const heroRef = useRef<HTMLElement>(null);
   const [mode, setMode] = useState<HeroMode | null>(null);
+  const [globeReady, setGlobeReady] = useState(false);
   const isStatic = mode === "reduced" || mode === "nowebgl";
 
   useEffect(() => {
-    setMode(detectHeroMode());
+    const paused = initMotionPreference();
+    const detected = detectHeroMode();
+    setMode(paused && detected !== "nowebgl" ? "reduced" : detected);
+    return onMotionPausedChange((p) => setMode(p ? (detected === "nowebgl" ? "nowebgl" : "reduced") : detected));
   }, []);
+
+  // Globe data is ready: wait for idle, resync ScrollTrigger with the restored scroll position, then fade the canvas in.
+  const onGlobeReady = () => {
+    const show = () => {
+      if (!isStatic) { ScrollTrigger.refresh(); ScrollTrigger.update(); }
+      requestAnimationFrame(() => setGlobeReady(true));
+    };
+    const ric = (window as Window & { requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number }).requestIdleCallback;
+    if (ric) ric(show, { timeout: 600 }); else setTimeout(show, 50);
+  };
 
   useEffect(() => {
     if (!mode || !heroRef.current) return;
@@ -103,17 +123,22 @@ export function HeroScene() {
         <div className="hz-grid-dense dot-grid-dense absolute inset-0 z-0 opacity-0" aria-hidden="true" />
 
         <div className="absolute inset-0 z-10" aria-hidden="true">
+          {/* Server-rendered planet: visible before JS/WebGL, cross-faded out once the globe is ready. */}
+          {mode !== "nowebgl" && <div className="hz-planet-ssr absolute inset-0" style={{ opacity: globeReady ? 0 : 1 }}><SvgPlanet className="opacity-60" /></div>}
           {mode === "nowebgl" ? (
             <SvgPlanet />
           ) : mode ? (
-            <Suspense fallback={null}>
-              <GlobeCanvas mode={mode} heroRef={heroRef} onFail={() => setMode("nowebgl")} />
-            </Suspense>
+            <div className={`hz-canvas absolute inset-0 ${globeReady ? "is-ready" : ""}`}>
+              <Suspense fallback={null}>
+                <GlobeCanvas mode={mode} heroRef={heroRef} onFail={() => setMode("nowebgl")} onReady={onGlobeReady} />
+              </Suspense>
+            </div>
           ) : null}
         </div>
 
         <p className="hz-eyebrow eyebrow absolute inset-x-0 top-28 z-20 text-center lg:top-32">{HERO_EYEBROW}</p>
 
+        <div className="hz-legibility pointer-events-none absolute inset-0 z-[15]" aria-hidden="true" />
         <LogoReveal />
 
         <div className="hz-scroll absolute inset-x-0 bottom-8 z-20 flex flex-col items-center gap-3">
