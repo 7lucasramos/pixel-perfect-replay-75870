@@ -1,7 +1,7 @@
 # Fase 3
-- [ ] Cena acústica conceitual com vistas, camadas, progresso e acessibilidade.
-- [ ] Página Tecnologia e cena compacta na home, preservando fases aprovadas.
-- [ ] Testes de regras, interação, movimento reduzido e telas 390, 768 e 1440.
+- [x] Cena acústica conceitual com vistas, camadas, progresso e acessibilidade.
+- [x] Página Tecnologia e cena compacta na home, preservando fases aprovadas.
+- [x] Testes de regras, interação, movimento reduzido e telas 390, 768 e 1440.
 
 # Fase 2
 - [x] Conteúdo institucional centralizado e abertura preservada.
