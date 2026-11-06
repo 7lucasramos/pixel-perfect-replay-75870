@@ -12,12 +12,14 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import institutionalCss from "../institutional.css?url";
-import productsCss from "../products.css?url";
+import manropeWoff2 from "@fontsource-variable/manrope/files/manrope-latin-wght-normal.woff2?url";
+import interWoff2 from "@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url";
 import { SiteNotFound } from "@/components/layout/SiteNotFound";
 import { RouteTransition } from "@/components/institutional/RouteTransition";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { WaveCursor } from "@/components/layout/WaveCursor";
 
 function NotFoundComponent() {
   return <SiteNotFound />;
@@ -31,33 +33,23 @@ function ErrorComponent({ error, reset }: ErrorComponentProps) {
   }, [error]);
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
-      <div className="max-w-md text-center">
-        <h1 className="text-xl font-semibold tracking-tight text-foreground">
-          This page didn't load
-        </h1>
-        <p className="mt-2 text-sm text-muted-foreground">
-          Something went wrong on our end. You can try refreshing or head back home.
+    <>
+      <Header />
+      <main id="conteudo" className="container-bz flex min-h-[70svh] flex-col justify-center pb-24 pt-40">
+        <p className="eyebrow">Erro</p>
+        <h1 className="bz-page-title mt-6">Esta página não carregou</h1>
+        <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground">
+          Algo deu errado do nosso lado. Tente novamente ou volte ao início.
         </p>
-        <div className="mt-6 flex flex-wrap justify-center gap-2">
-          <button
-            onClick={() => {
-              router.invalidate();
-              reset();
-            }}
-            className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
-          >
-            Try again
+        <div className="mt-10 flex flex-wrap gap-4">
+          <button type="button" onClick={() => { router.invalidate(); reset(); }} className="btn-bz">
+            Tentar novamente
           </button>
-          <a
-            href="/"
-            className="inline-flex items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent"
-          >
-            Voltar ao início
-          </a>
+          <a href="/" className="btn-bz btn-bz-outline">Voltar ao início</a>
         </div>
-      </div>
-    </div>
+      </main>
+      <Footer />
+    </>
   );
 }
 
@@ -66,6 +58,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { name: "theme-color", content: "#F6F9FC" },
       { title: "Bonzai System" },
     ],
     links: [
@@ -77,13 +70,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "apple-touch-icon", href: "/apple-touch-icon-180.png", sizes: "180x180" },
       { rel: "manifest", href: "/site.webmanifest" },
       { rel: "stylesheet", href: institutionalCss },
-      { rel: "stylesheet", href: productsCss },
-      { rel: "preconnect", href: "https://fonts.googleapis.com" },
-      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      {
-        rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@400&family=Manrope:wght@500;600;700;800&display=swap",
-      },
+      { rel: "preload", href: manropeWoff2, as: "font", type: "font/woff2", crossOrigin: "anonymous" },
+      { rel: "preload", href: interWoff2, as: "font", type: "font/woff2", crossOrigin: "anonymous" },
     ],
   }),
   shellComponent: RootShell,
@@ -121,6 +109,7 @@ function RootComponent() {
       <Header />
       <RouteTransition><Outlet /></RouteTransition>
       <Footer />
+      <WaveCursor />
     </QueryClientProvider>
   );
 }

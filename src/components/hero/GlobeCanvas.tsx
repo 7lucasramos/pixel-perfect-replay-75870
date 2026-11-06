@@ -1,20 +1,24 @@
-import { useEffect, useState, type RefObject } from "react";
+import { useEffect, useRef, useState, type RefObject } from "react";
 import { Canvas } from "@react-three/fiber";
 import { PerformanceMonitor } from "@react-three/drei";
 import { Globe } from "./Globe";
-import type { HeroMode } from "./capabilities";
+import { isLargeCapableTouch, type HeroMode } from "./capabilities";
 
 export default function GlobeCanvas({
   mode,
   heroRef,
   onFail,
+  onReady,
 }: {
   mode: HeroMode;
   heroRef: RefObject<HTMLElement | null>;
   onFail: () => void;
+  onReady?: () => void;
 }) {
   const lite = mode === "lite";
-  const [dpr, setDpr] = useState<[number, number]>(lite ? [1, 1.25] : [1, 2]);
+  const [dpr, setDpr] = useState<[number, number]>(lite ? [1, 1.25] : isLargeCapableTouch() ? [1, 1.5] : [1, 2]);
+  const cleanup = useRef<(() => void) | null>(null);
+  useEffect(() => () => cleanup.current?.(), []);
   const [active, setActive] = useState(true);
 
   // Pause rendering when the hero is off-screen or the tab is hidden.
@@ -44,15 +48,22 @@ export default function GlobeCanvas({
         gl.setClearColor(0x000000, 0);
         const canvas = gl.domElement;
         let timer: ReturnType<typeof setTimeout> | undefined;
-        canvas.addEventListener("webglcontextlost", (e) => {
+        const lost = (e: Event) => {
           e.preventDefault();
           timer = setTimeout(onFail, 3000);
-        });
-        canvas.addEventListener("webglcontextrestored", () => clearTimeout(timer));
+        };
+        const restored = () => clearTimeout(timer);
+        canvas.addEventListener("webglcontextlost", lost);
+        canvas.addEventListener("webglcontextrestored", restored);
+        cleanup.current = () => {
+          clearTimeout(timer);
+          canvas.removeEventListener("webglcontextlost", lost);
+          canvas.removeEventListener("webglcontextrestored", restored);
+        };
       }}
     >
       <PerformanceMonitor bounds={() => [40, 120]} flipflops={2} onDecline={() => setDpr([1, 1])} />
-      <Globe mode={mode} />
+      <Globe mode={mode} {...(onReady ? { onReady } : {})} />
     </Canvas>
   );
 }

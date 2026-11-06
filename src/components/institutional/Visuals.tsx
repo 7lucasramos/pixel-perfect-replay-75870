@@ -1,16 +1,15 @@
 import { useEffect, useRef } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { loadGsap, motionReduced } from "@/lib/motion";
 import { ImageIcon } from "lucide-react";
 import { COPY } from "@/content/site";
 
 export function PhotoPlaceholder({ label = COPY.photo, wide = false, parallax = false }: { label?: string; wide?: boolean; parallax?: boolean }) {
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    if (!parallax || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    gsap.registerPlugin(ScrollTrigger);
-    const ctx = gsap.context(() => { gsap.fromTo(".placeholder-inner", { y: -20 }, { y: 20, ease: "none", scrollTrigger: { trigger: ref.current, start: "top bottom", end: "bottom top", scrub: true } }); }, ref);
-    return () => ctx.revert();
+    if (!parallax || motionReduced()) return;
+    let cancelled = false, revert: (() => void) | undefined;
+    loadGsap().then(({ gsap }) => { if (cancelled) return; const ctx = gsap.context(() => { gsap.fromTo(".placeholder-inner", { y: -20 }, { y: 20, ease: "none", scrollTrigger: { trigger: ref.current, start: "top bottom", end: "bottom top", scrub: true } }); }, ref); revert = () => ctx.revert(); });
+    return () => { cancelled = true; revert?.(); };
   }, [parallax]);
   return <div ref={ref} className={`bz-placeholder ${wide ? "aspect-video" : "aspect-[4/3]"}`}><div className="placeholder-inner flex flex-col items-center gap-4"><ImageIcon size={26} strokeWidth={1} aria-hidden="true" /><span className="text-center font-mono text-xs">{label}</span></div></div>;
 }
@@ -21,7 +20,7 @@ export function DotCanvas({ metamorphosis = false }: { metamorphosis?: boolean }
     const canvas = ref.current;
     const ctx = canvas?.getContext("2d");
     if (!canvas || !ctx) return;
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const reduced = motionReduced();
     const fine = window.matchMedia("(pointer: fine)").matches;
     let progress = reduced ? 1 : 0, active = false, frame = 0, width = 0, height = 0;
     const cursor = { x: -999, y: -999 };
@@ -59,10 +58,10 @@ export function DotCanvas({ metamorphosis = false }: { metamorphosis?: boolean }
     const leave = () => { cursor.x = -999; cursor.y = -999; schedule(); };
     const surface = canvas.parentElement;
     if (fine && !reduced) { surface?.addEventListener("pointermove", move); surface?.addEventListener("pointerleave", leave); }
-    gsap.registerPlugin(ScrollTrigger);
     const state = { progress: 0 };
-    const tween = metamorphosis && !reduced ? gsap.to(state, { progress: 1, ease: "none", onUpdate: () => { progress = state.progress; schedule(); }, scrollTrigger: { trigger: canvas.closest("article"), start: "top 85%", end: "bottom 30%", scrub: true } }) : null;
-    return () => { observer.disconnect(); resizeObserver.disconnect(); cancelAnimationFrame(frame); surface?.removeEventListener("pointermove", move); surface?.removeEventListener("pointerleave", leave); tween?.scrollTrigger?.kill(); tween?.kill(); };
+    let cancelled = false, tween: { kill: () => void; scrollTrigger?: { kill: () => void } } | null = null;
+    if (metamorphosis && !reduced) loadGsap().then(({ gsap }) => { if (cancelled) return; tween = gsap.to(state, { progress: 1, ease: "none", onUpdate: () => { progress = state.progress; schedule(); }, scrollTrigger: { trigger: canvas.closest("article"), start: "top 85%", end: "bottom 30%", scrub: true } }); });
+    return () => { cancelled = true; observer.disconnect(); resizeObserver.disconnect(); cancelAnimationFrame(frame); surface?.removeEventListener("pointermove", move); surface?.removeEventListener("pointerleave", leave); tween?.scrollTrigger?.kill(); tween?.kill(); };
   }, [metamorphosis]);
   return <canvas ref={ref} aria-hidden="true" className={metamorphosis ? "aspect-[4/3] w-full bg-bz-ice" : "pointer-events-none absolute inset-0 h-full w-full"} />;
 }
@@ -80,12 +79,14 @@ export function WaveRings({ className = "" }: { className?: string }) {
 export function AcousticVisual() {
   const ref = useRef<SVGSVGElement>(null);
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    gsap.registerPlugin(ScrollTrigger);
+    if (motionReduced()) return;
+    let cancelled = false, revert: (() => void) | undefined;
+    loadGsap().then(({ gsap }) => { if (cancelled) return;
     const ctx = gsap.context(() => {
       gsap.from(".bz-beam", { opacity: 0, scaleX: 0, transformOrigin: "left", stagger: .06, scrollTrigger: { trigger: ref.current, start: "top 90%", end: "bottom 40%", scrub: true } });
       gsap.fromTo(ref.current, { y: -20 }, { y: 20, ease: "none", scrollTrigger: { trigger: ref.current, start: "top bottom", end: "bottom top", scrub: true } });
-    }, ref); return () => ctx.revert();
+    }, ref); revert = () => ctx.revert(); });
+    return () => { cancelled = true; revert?.(); };
   }, []);
   return <div className="bz-acoustic relative aspect-[4/3] w-full"><svg ref={ref} viewBox="0 0 600 450" className="h-full w-full text-bz-cyan" aria-hidden="true"><g fill="none" stroke="currentColor" strokeWidth="1">{[130,320].map(y => <g key={y}><rect x="70" y={y - 20} width="24" height="40" rx="3" />{[-100,-65,-30,0,30,65,100].map(d => <line className="bz-beam" key={d} x1="94" y1={y} x2="540" y2={y + d} opacity=".4" />)}{[40,75,110].map(r => <circle key={r} cx="82" cy={y} r={r} opacity=".2" />)}</g>)}</g></svg><p className="absolute bottom-2 left-6 font-mono text-xs text-bz-white/85">{COPY.conceptual}</p></div>;
 }

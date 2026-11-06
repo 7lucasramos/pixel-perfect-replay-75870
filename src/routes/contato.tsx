@@ -7,7 +7,7 @@ import { findProduct } from "@/content/products";
 
 export const Route = createFileRoute("/contato")({
   validateSearch: (search: Record<string, unknown>): { produto?: string } => (typeof search["produto"] === "string" && findProduct(search["produto"]) ? { produto: search["produto"] } : {}),
-  head: () => institutionalHead(SEO.contact.title, SEO.contact.description),
+  head: () => institutionalHead(SEO.contact.title, SEO.contact.description, "/contato"),
   component: ContactPage,
 });
 function ContactPage() {

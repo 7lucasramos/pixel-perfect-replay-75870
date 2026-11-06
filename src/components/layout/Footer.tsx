@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { Logo } from "@/components/brand/Logo";
+import { MotionToggle } from "./MotionToggle";
 import { NAV, HERO_HEADLINE, visibleChannels } from "@/content/site";
 import { ContactChannels } from "@/components/institutional/Shared";
 
@@ -17,8 +18,12 @@ export function Footer() {
         </nav>
         {visibleChannels().length > 0 && <div className="text-bz-white/85"><ContactChannels /></div>}
       </div>
-      <div className="container-bz mt-12 border-t border-bz-white/10 pt-6 text-xs text-bz-white/85">
-        © Bonzai System
+      <div className="container-bz mt-12 flex flex-col gap-4 border-t border-bz-white/10 pt-6 text-xs text-bz-white/85 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
+          <span>© Bonzai System</span>
+          <Link to="/privacidade" className="inline-flex min-h-11 items-center transition-colors hover:text-bz-cyan">Privacidade</Link>
+        </div>
+        <MotionToggle />
       </div>
     </footer>
   );

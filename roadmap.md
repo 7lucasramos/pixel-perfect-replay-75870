@@ -1,3 +1,9 @@
+# Fase 5B
+- [x] Dados do manual só no servidor; globo pré-calculado; fontes locais; dependências removidas.
+- [x] Abertura com planeta imediato, F5, toque 44 px, pausa de animações, erro em português.
+- [x] Antispam no formulário, SEO completo, /privacidade, validação da marca.
+- [ ] Testes em iPhone/iPad reais (depende do usuário).
+
 # Fase 4
 - [x] Produtos, palco com foto anexada, configuração e dados condicionais.
 - [x] Casos, demonstração restrita, home, navegação e contato pré-preenchido.

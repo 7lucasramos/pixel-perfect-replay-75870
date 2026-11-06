@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 import { heroProgress } from "./useHeroProgress";
-import { computeLandPoints, latLonToVec } from "./landPoints";
+import { loadGlobePoints, latLonToVec } from "./landPoints";
 import type { HeroMode } from "./capabilities";
 
 const CYAN = new THREE.Color("#12B3F0");
@@ -152,7 +152,7 @@ function arcGeometry(a: [number, number], b: [number, number]) {
 }
 
 /* ---------- component ---------- */
-export function Globe({ mode }: { mode: HeroMode }) {
+export function Globe({ mode, onReady }: { mode: HeroMode; onReady?: () => void }) {
   const lite = mode === "lite";
   const reduced = mode === "reduced";
   const { camera, size, gl } = useThree();
@@ -166,21 +166,13 @@ export function Globe({ mode }: { mode: HeroMode }) {
   const smooth = useRef(reduced ? 0.6 : heroProgress.value);
   const pointer = useRef({ x: 0, y: 0, tx: 0, ty: 0 });
 
-  const [land, setLand] = useState<Float32Array | null>(null);
+  const [points, setPoints] = useState<{ land: Float32Array; ocean: Float32Array | null } | null>(null);
+  const land = points?.land ?? null;
 
   useEffect(() => {
     let cancelled = false;
-    const run = () =>
-      computeLandPoints(lite ? 9000 : 26000).then((a) => {
-        if (!cancelled) setLand(a);
-      });
-    const ric = (window as Window & { requestIdleCallback?: (cb: () => void) => number })
-      .requestIdleCallback;
-    if (ric) ric(run);
-    else setTimeout(run, 30);
-    return () => {
-      cancelled = true;
-    };
+    loadGlobePoints(lite).then((p) => { if (!cancelled) { setPoints(p); onReady?.(); } }).catch((e) => console.error("globe data", e));
+    return () => { cancelled = true; };
   }, [lite]);
 
   useEffect(() => {
@@ -232,19 +224,11 @@ export function Globe({ mode }: { mode: HeroMode }) {
   }, [land]);
 
   const oceanGeo = useMemo(() => {
-    if (lite) return null;
-    const n = 1500;
-    const arr = new Float32Array(n * 3);
-    for (let i = 0; i < n; i++) {
-      const u = Math.random() * 2 - 1;
-      const t = Math.random() * Math.PI * 2;
-      const r = Math.sqrt(1 - u * u) * 1.001;
-      arr.set([Math.cos(t) * r, u * 1.001, Math.sin(t) * r], i * 3);
-    }
+    if (lite || !points?.ocean) return null;
     const g = new THREE.BufferGeometry();
-    g.setAttribute("position", new THREE.BufferAttribute(arr, 3));
+    g.setAttribute("position", new THREE.BufferAttribute(points.ocean, 3));
     return g;
-  }, [lite]);
+  }, [lite, points]);
 
   const sphereMat = useMemo(
     () =>
