@@ -40,7 +40,7 @@ export function AboutOrigin() {
         <div className="grid gap-12 lg:grid-cols-2 lg:gap-20">
           <div>
             <p className="ao-reveal eyebrow">Sobre a Bonzai</p>
-            <h2 id="ao-title" className="ao-reveal mt-5 text-[clamp(40px,6vw,88px)] font-extrabold leading-[0.95] text-foreground">
+            <h2 id="ao-title" className="ao-reveal mt-5 text-[clamp(32px,9vw,88px)] min-[401px]:text-[clamp(40px,6vw,88px)] [overflow-wrap:anywhere] hyphens-auto font-extrabold leading-[0.95] text-foreground">
               A origem de um <span className="text-bz-cyan">legado</span>
             </h2>
           </div>
