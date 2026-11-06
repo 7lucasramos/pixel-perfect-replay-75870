@@ -2,7 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { getRequestHeader } from "@tanstack/react-start/server";
 import { createClient } from "@supabase/supabase-js";
 import type { Database } from "@/integrations/supabase/types";
-import { contactSchema, MIN_FILL_MS, type ContactInput } from "./contact-schema";
+import { contactSchema, looksLikeSpam, type ContactInput } from "./contact-schema";
 
 export type ContactResult = { ok: true } | { ok: false; reason: "rate" | "error" };
 
@@ -16,9 +16,7 @@ export const submitContact = createServerFn({ method: "POST" })
   .handler(async ({ data }): Promise<ContactResult> => {
     const { website, iniciado_em, ...request } = data;
     // (a) honeypot and (b) too-fast submissions: silently rejected as generic errors.
-    if (website) return { ok: false, reason: "error" };
-    const elapsed = Date.now() - iniciado_em;
-    if (!(elapsed >= MIN_FILL_MS && elapsed < 24 * 60 * 60 * 1000)) return { ok: false, reason: "error" };
+    if (looksLikeSpam({ website, iniciado_em })) return { ok: false, reason: "error" };
 
     const url = process.env["SUPABASE_URL"];
     const key = process.env["SUPABASE_PUBLISHABLE_KEY"];

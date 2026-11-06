@@ -15,3 +15,8 @@ export const contactSchema = z.object({
  iniciado_em: z.number().int().nonnegative(),
 });
 export type ContactInput = z.infer<typeof contactSchema>;
+/** Honeypot filled or form sent faster than MIN_FILL_MS (or with an implausible timestamp) = spam. */
+export function looksLikeSpam(input: { website: string; iniciado_em: number }, now = Date.now()) {
+  const elapsed = now - input.iniciado_em;
+  return input.website.length > 0 || !(elapsed >= MIN_FILL_MS && elapsed < 24 * 60 * 60 * 1000);
+}
