@@ -1,9 +1,8 @@
-import logoDark from "@/assets/brand/bonzai-logo-preto-ciano.webp.asset.json";
-import logoLight from "@/assets/brand/bonzai-logo-branco-ciano.webp.asset.json";
-import logoDarkSm from "@/assets/brand/bonzai-logo-preto-ciano-480.webp.asset.json";
-import logoLightSm from "@/assets/brand/bonzai-logo-branco-ciano-480.webp.asset.json";
-import markDark from "@/assets/brand/bonzai-simbolo-B.png.asset.json";
-import markLight from "@/assets/brand/bonzai-simbolo-B-branco.png.asset.json";
+
+const A = (name: string) => ({ url: `/brand/${name}` });
+const logoDark = A("bonzai-logo-preto-ciano.webp"), logoLight = A("bonzai-logo-branco-ciano.webp");
+const logoDarkSm = A("bonzai-logo-preto-ciano-480.webp"), logoLightSm = A("bonzai-logo-branco-ciano-480.webp");
+const markDark = A("bonzai-simbolo-B.png"), markLight = A("bonzai-simbolo-B-branco.png");
 
 /** tone = background tone: "light" background → dark artwork; "dark" background → white artwork. */
 type Props = {

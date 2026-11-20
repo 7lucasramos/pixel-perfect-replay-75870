@@ -70,9 +70,6 @@ export function AboutOrigin() {
           ))}
         </ol>
 
-        <div className="ao-reveal mt-20 flex aspect-[4/3] w-full max-w-3xl items-center justify-center rounded-3xl bg-bz-graphite text-sm text-bz-white/70">
-          Foto institucional (a enviar)
-        </div>
       </div>
     </section>
   );

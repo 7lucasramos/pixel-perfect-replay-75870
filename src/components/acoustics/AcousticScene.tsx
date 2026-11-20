@@ -5,6 +5,7 @@ import { TopView } from "./TopView";
 import { SideView } from "./SideView";
 import { Controls } from "./Controls";
 import { DEFAULT_LAYERS, type Layer, type View } from "./scene-config";
+import { DISTANCES, SIM, SIM_FOOTNOTE, type Distance } from "./sim-data";
 import { useSceneProgress } from "./useSceneProgress";
 import "./acoustics.css";
 
@@ -15,6 +16,7 @@ export function AcousticScene({ mode }: { mode: "full" | "compact" }) {
   const [view, setView] = useState<View>("top");
   const [layers, setLayers] = useState({ ...DEFAULT_LAYERS });
   const [selected, setSelected] = useState<number | null>(null);
+  const [distance, setDistance] = useState<Distance>(15);
   const [capabilities, setCapabilities] = useState({ ready: false, lite: true, reduced: false });
   useEffect(() => {
     const media = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -51,12 +53,22 @@ export function AcousticScene({ mode }: { mode: "full" | "compact" }) {
     transition.current = gsap.to(visual.current, { opacity: 0, scale: .96, duration: .35, onComplete: () => setView(next) });
   };
   const toggleLayer = (layer: Layer) => { if (layer === "sources") setSelected(null); setLayers(prev => ({ ...prev, [layer]: !prev[layer] })); };
-  const props = { id, lite: capabilities.lite, reduced: capabilities.reduced, selected, onSelect: setSelected, interactive: mode === "full" };
+  const props = { id, lite: capabilities.lite, reduced: capabilities.reduced, selected, onSelect: setSelected, interactive: mode === "full", distance };
+  const v = SIM[distance];
   return <div className={`ac-layout ${mode === "compact" ? "ac-compact" : ""}`}>
-    <div ref={root} className="ac-canvas" onClick={() => setSelected(null)}>
-      <p className="ac-badge">Visualização conceitual, não é medição</p>
-      <div ref={visual} className="ac-visual">{view === "top" ? <TopView {...props} /> : <SideView {...props} />}</div>
-      {selected !== null && layers.sources && <div className="ac-tooltip" role="tooltip">Fonte {selected === 0 ? "A" : "B"}: origem do som neste cenário ilustrativo</div>}
+    <div className="ac-main">
+      <div ref={root} className={`ac-canvas ac-canvas-${view}`} onClick={() => setSelected(null)}>
+        <div ref={visual} className="ac-visual">{view === "top" ? <TopView {...props} /> : <SideView {...props} />}</div>
+        {selected !== null && layers.sources && <div className="ac-tooltip" role="tooltip">{selected === 0 ? "Lado L" : "Lado R"} do sistema Bonzai Mini</div>}
+      </div>
+      <div className="ac-values" aria-label="Níveis de pressão sonora por distância">
+        <div className="ac-chips" role="group" aria-label="Distância">{DISTANCES.map(d => <button key={d} type="button" className="ac-chip" aria-pressed={d === distance} onClick={() => setDistance(d)}>{d} m</button>)}</div>
+        <div className="ac-card" aria-live="polite">
+          <div><p className="ac-card-k">Nível superior</p><p className="ac-card-v">RMS <b>{v.upper.rms}</b> dB</p><p className="ac-card-v">PEAK <b>{v.upper.peak}</b> dB</p></div>
+          <div><p className="ac-card-k">Nível inferior</p><p className="ac-card-v">RMS <b>{v.lower.rms}</b> dB</p><p className="ac-card-v">PEAK <b>{v.lower.peak}</b> dB</p></div>
+        </div>
+      </div>
+      <p className="ac-foot">{SIM_FOOTNOTE}</p>
     </div>
     {mode === "full" && <Controls view={view} onView={changeView} layers={layers} onLayer={toggleLayer} slider={slider} playing={playback.playing} seek={playback.seek} toggle={playback.toggle} restart={playback.restart} />}
   </div>;

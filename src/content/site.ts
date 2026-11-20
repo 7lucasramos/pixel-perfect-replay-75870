@@ -1,11 +1,18 @@
 // Institutional copy supplied by the brand. Applications remain subject to brand validation.
 export const HERO_HEADLINE = "Engenharia que transforma o som.";
 export const HERO_EYEBROW = "Sistemas profissionais de sonorização";
-export const CONTACT = { email: "", whatsapp: "", phone: "", address: "", instagram: "", linkedin: "" };
+export const CONTACT = {
+  whatsapp: "244931519081",
+  whatsappDisplay: "+244 931 519 081",
+  whatsappMessage: "Olá, quero saber mais sobre o sistema Bonzai",
+  email: "bonzaisystem@gmail.com",
+} as const;
+export const waLink = (message: string = CONTACT.whatsappMessage) => `https://wa.me/${CONTACT.whatsapp}?text=${encodeURIComponent(message)}`;
+export const mailLink = (subject = "Contato pelo site Bonzai System") => `mailto:${CONTACT.email}?subject=${encodeURIComponent(subject)}`;
 export const NAV = [
- { to: "/", label: "Início" }, { to: "/sobre", label: "Sobre a Bonzai" },
- { to: "/tecnologia", label: "Tecnologia" }, { to: "/produtos", label: "Produtos" },
- { to: "/solucoes", label: "Soluções" }, { to: "/casos-de-sucesso", label: "Casos de sucesso" }, { to: "/contato", label: "Contato" },
+ { to: "/", label: "Início" }, { to: "/sobre", label: "Sobre" },
+ { to: "/tecnologia", label: "Tecnologia" }, { to: "/produtos/bonzai-mini", label: "Sistema" },
+ { to: "/solucoes", label: "Soluções" }, { to: "/contato", label: "Contato" },
 ] as const;
 export const STORY = [
   {
@@ -47,56 +54,28 @@ export const STORY = [
     "visual": "waves"
   }
 ] as const;
-export const SOLUTIONS_STATUS = "a validar com a marca";
 export const SOLUTIONS = [
-  {
-    "title": "Eventos e grandes produções",
-    "description": "Sistemas pensados para projetos de grande porte."
-  },
-  {
-    "title": "Sonorização profissional",
-    "description": "Soluções para empresas de locação, integradores e produtores."
-  },
-  {
-    "title": "Instalações permanentes",
-    "description": "Projetos feitos para operar no dia a dia."
-  },
-  {
-    "title": "Projetos personalizados",
-    "description": "Configurações adaptadas à necessidade de cada cliente."
-  },
-  {
-    "title": "Aplicações corporativas e espaços de apresentação",
-    "description": "Clareza sonora para ambientes de comunicação."
-  }
+  { title: "Eventos e grandes produções", description: "Sistemas pensados para projetos de grande porte." },
+  { title: "Sonorização profissional", description: "Soluções para empresas de locação, integradores e produtores." },
+  { title: "Instalações permanentes", description: "Projetos feitos para operar no dia a dia." },
+  { title: "Projetos personalizados", description: "Configurações adaptadas à necessidade de cada cliente." },
+  { title: "Aplicações corporativas e espaços de apresentação", description: "Clareza sonora para ambientes de comunicação." },
 ] as const;
-export const PROFILES = ["Empresa de locação de áudio", "Integrador", "Produtor de eventos", "Responsável por projeto de sonorização", "Profissional de áudio", "Outro"] as const;
-export const PROJECT_TYPES = ["Evento ou produção", "Instalação permanente", "Sistema de sonorização", "Projeto personalizado", "Outro"] as const;
-export { cases } from "./cases";
-export type { CaseStudy } from "./cases";
 export const COPY = {
- photo: "Foto institucional (a enviar)", solutionPhoto: "Foto a enviar", productPhoto: "Foto do produto (a enviar)",
  storyEyebrow: "Sobre a Bonzai", aboutTitle: "Som com identidade, construído com proximidade",
  techEyebrow: "Tecnologia e engenharia acústica", techTitle: "Som projetado, não improvisado.",
- techText: "Uma representação conceitual de como o som se distribui sobre uma área.",
- conceptual: "Visualização conceitual", techButton: "Conhecer a tecnologia",
+ techText: "Veja como o sistema Bonzai Mini distribui o som sobre uma área de 30 × 30 m, com os níveis de pressão sonora em cada distância.",
+ techButton: "Conhecer a tecnologia",
  solutionsTitle: "Soluções para cada tipo de projeto", solutionsPageTitle: "Aplicações dos sistemas Bonzai", solutionsButton: "Ver todas as soluções",
- productsTitle: "Sistemas profissionais Bonzai", product: "Bonzai Mini", productText: "Um dos sistemas da linha Bonzai.", productsButton: "Conhecer os produtos",
- casesTitle: "Projetos e aplicações reais", casesSoon: "Em breve: casos de sucesso Bonzai.", casesButton: "Ver casos",
- casesModel: "Exemplo de estrutura (não é um caso real)", casesFuture: "Os casos reais serão publicados aqui.",
- ctaTitle: "Vamos projetar o som do seu próximo projeto?", ctaText: "Converse com nossa equipe e descubra a solução Bonzai ideal para o seu projeto.",
- request: "Solicitar projeto", talk: "Falar com a equipe",
- contactTitle: "Solicite seu projeto", contactText: "Conte um pouco sobre o seu projeto e nossa equipe retorna com a melhor solução.",
- consent: "Concordo em ser contatado(a) pela Bonzai System sobre este pedido.",
- success: "Recebemos seu pedido. Nossa equipe entrará em contato.",
- submit: "Enviar pedido", sending: "Enviando pedido…", error: "Não foi possível enviar agora. Tente novamente.", rateLimited: "Muitos envios em pouco tempo. Tente novamente em alguns minutos.",
+ systemEyebrow: "Sistema", systemTitle: "Bonzai Mini", systemText: "Line array de 8 módulos, 450 W por lado e subgraves ativos. Dados completos do manual do produto.", systemButton: "Ver o sistema completo",
+ ctaTitle: "Vamos projetar o som do seu próximo projeto?", ctaText: "Fale direto com a equipe Bonzai e descubra a solução ideal para o seu projeto.",
+ whatsappCta: "Falar no WhatsApp", emailCta: "Enviar e-mail",
+ contactTitle: "Fale com a equipe Bonzai", contactText: "Escolha o canal que preferir. Respondemos direto pelo WhatsApp ou por e-mail.",
 } as const;
 export const SEO = {
  about: { title: "Sobre | Bonzai System", description: "Conheça a história, as raízes e o compromisso da Bonzai System com o som e suas pessoas." },
  solutions: { title: "Soluções | Bonzai System", description: "Conheça as aplicações dos sistemas Bonzai para diferentes tipos de projeto." },
- cases: { title: "Casos de sucesso | Bonzai System", description: "Projetos e aplicações Bonzai. Os casos reais serão publicados aqui." },
- contact: { title: "Contato | Bonzai System", description: "Converse com a equipe Bonzai System sobre o seu projeto de sonorização." },
+ contact: { title: "Contato | Bonzai System", description: "Fale com a equipe Bonzai System pelo WhatsApp ou e-mail sobre o seu projeto de sonorização." },
+ tech: { title: "Tecnologia | Bonzai System", description: "Simulação de cobertura e níveis de pressão sonora do sistema Bonzai Mini em uma área de 30 × 30 m." },
+ system: { title: "Bonzai Mini | Bonzai System", description: "Sistema Bonzai Mini: line array de 8 módulos, 450 W por lado, subgraves ativos BZ18B e dados do manual." },
 };
-export function visibleChannels(contact: typeof CONTACT = CONTACT) {
- return Object.entries(contact).filter(([, value]) => value.trim().length > 0);
-}

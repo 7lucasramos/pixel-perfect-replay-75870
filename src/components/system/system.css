@@ -1,0 +1,9 @@
+.sys-nav { position: sticky; top: 64px; z-index: 40; background: color-mix(in oklab, var(--background) 82%, transparent); backdrop-filter: saturate(180%) blur(20px); border-bottom: 1px solid var(--border); }
+.sys-nav-inner { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; }
+.sys-nav-inner::-webkit-scrollbar { display: none; }
+.sys-nav a { flex: none; display: inline-flex; align-items: center; min-height: 48px; padding: 0 14px; font-size: 13px; color: var(--muted-foreground); transition: color .2s; }
+.sys-nav a:hover { color: var(--foreground); }
+.system-page { padding-top: 0; }
+.sys-acc[open] .sys-acc-icon { transform: rotate(45deg); }
+.sys-acc-icon { display: inline-block; font-size: 24px; transition: transform .2s; }
+@media (min-width: 1024px) { .sys-nav { top: 72px; } }

@@ -10,36 +10,22 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as CasosDeSucessoRouteImport } from './routes/casos-de-sucesso'
 import { Route as ContatoRouteImport } from './routes/contato'
-import { Route as PrivacidadeRouteImport } from './routes/privacidade'
 import { Route as ProdutosRouteImport } from './routes/produtos'
 import { Route as SobreRouteImport } from './routes/sobre'
 import { Route as SolucoesRouteImport } from './routes/solucoes'
 import { Route as TecnologiaRouteImport } from './routes/tecnologia'
-import { Route as CasosDeSucessoIndexRouteImport } from './routes/casos-de-sucesso.index'
-import { Route as CasosDeSucessoSlugRouteImport } from './routes/casos-de-sucesso.$slug'
 import { Route as ProdutosIndexRouteImport } from './routes/produtos.index'
-import { Route as ProdutosSlugRouteImport } from './routes/produtos.$slug'
+import { Route as ProdutosBonzaiMiniRouteImport } from './routes/produtos.bonzai-mini'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CasosDeSucessoRoute = CasosDeSucessoRouteImport.update({
-  id: '/casos-de-sucesso',
-  path: '/casos-de-sucesso',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ContatoRoute = ContatoRouteImport.update({
   id: '/contato',
   path: '/contato',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PrivacidadeRoute = PrivacidadeRouteImport.update({
-  id: '/privacidade',
-  path: '/privacidade',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProdutosRoute = ProdutosRouteImport.update({
@@ -62,116 +48,82 @@ const TecnologiaRoute = TecnologiaRouteImport.update({
   path: '/tecnologia',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CasosDeSucessoIndexRoute = CasosDeSucessoIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => CasosDeSucessoRoute,
-} as any)
-const CasosDeSucessoSlugRoute = CasosDeSucessoSlugRouteImport.update({
-  id: '/$slug',
-  path: '/$slug',
-  getParentRoute: () => CasosDeSucessoRoute,
-} as any)
 const ProdutosIndexRoute = ProdutosIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => ProdutosRoute,
 } as any)
-const ProdutosSlugRoute = ProdutosSlugRouteImport.update({
-  id: '/$slug',
-  path: '/$slug',
+const ProdutosBonzaiMiniRoute = ProdutosBonzaiMiniRouteImport.update({
+  id: '/bonzai-mini',
+  path: '/bonzai-mini',
   getParentRoute: () => ProdutosRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/casos-de-sucesso': typeof CasosDeSucessoRouteWithChildren
   '/contato': typeof ContatoRoute
-  '/privacidade': typeof PrivacidadeRoute
   '/produtos': typeof ProdutosRouteWithChildren
   '/sobre': typeof SobreRoute
   '/solucoes': typeof SolucoesRoute
   '/tecnologia': typeof TecnologiaRoute
-  '/casos-de-sucesso/$slug': typeof CasosDeSucessoSlugRoute
-  '/produtos/$slug': typeof ProdutosSlugRoute
-  '/casos-de-sucesso/': typeof CasosDeSucessoIndexRoute
+  '/produtos/bonzai-mini': typeof ProdutosBonzaiMiniRoute
   '/produtos/': typeof ProdutosIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/contato': typeof ContatoRoute
-  '/privacidade': typeof PrivacidadeRoute
   '/sobre': typeof SobreRoute
   '/solucoes': typeof SolucoesRoute
   '/tecnologia': typeof TecnologiaRoute
-  '/casos-de-sucesso/$slug': typeof CasosDeSucessoSlugRoute
-  '/produtos/$slug': typeof ProdutosSlugRoute
-  '/casos-de-sucesso': typeof CasosDeSucessoIndexRoute
+  '/produtos/bonzai-mini': typeof ProdutosBonzaiMiniRoute
   '/produtos': typeof ProdutosIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/casos-de-sucesso': typeof CasosDeSucessoRouteWithChildren
   '/contato': typeof ContatoRoute
-  '/privacidade': typeof PrivacidadeRoute
   '/produtos': typeof ProdutosRouteWithChildren
   '/sobre': typeof SobreRoute
   '/solucoes': typeof SolucoesRoute
   '/tecnologia': typeof TecnologiaRoute
-  '/casos-de-sucesso/$slug': typeof CasosDeSucessoSlugRoute
-  '/produtos/$slug': typeof ProdutosSlugRoute
-  '/casos-de-sucesso/': typeof CasosDeSucessoIndexRoute
+  '/produtos/bonzai-mini': typeof ProdutosBonzaiMiniRoute
   '/produtos/': typeof ProdutosIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/casos-de-sucesso'
     | '/contato'
-    | '/privacidade'
     | '/produtos'
     | '/sobre'
     | '/solucoes'
     | '/tecnologia'
-    | '/casos-de-sucesso/$slug'
-    | '/produtos/$slug'
-    | '/casos-de-sucesso/'
+    | '/produtos/bonzai-mini'
     | '/produtos/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/contato'
-    | '/privacidade'
     | '/sobre'
     | '/solucoes'
     | '/tecnologia'
-    | '/casos-de-sucesso/$slug'
-    | '/produtos/$slug'
-    | '/casos-de-sucesso'
+    | '/produtos/bonzai-mini'
     | '/produtos'
   id:
     | '__root__'
     | '/'
-    | '/casos-de-sucesso'
     | '/contato'
-    | '/privacidade'
     | '/produtos'
     | '/sobre'
     | '/solucoes'
     | '/tecnologia'
-    | '/casos-de-sucesso/$slug'
-    | '/produtos/$slug'
-    | '/casos-de-sucesso/'
+    | '/produtos/bonzai-mini'
     | '/produtos/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  CasosDeSucessoRoute: typeof CasosDeSucessoRouteWithChildren
   ContatoRoute: typeof ContatoRoute
-  PrivacidadeRoute: typeof PrivacidadeRoute
   ProdutosRoute: typeof ProdutosRouteWithChildren
   SobreRoute: typeof SobreRoute
   SolucoesRoute: typeof SolucoesRoute
@@ -187,25 +139,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/casos-de-sucesso': {
-      id: '/casos-de-sucesso'
-      path: '/casos-de-sucesso'
-      fullPath: '/casos-de-sucesso'
-      preLoaderRoute: typeof CasosDeSucessoRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/contato': {
       id: '/contato'
       path: '/contato'
       fullPath: '/contato'
       preLoaderRoute: typeof ContatoRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/privacidade': {
-      id: '/privacidade'
-      path: '/privacidade'
-      fullPath: '/privacidade'
-      preLoaderRoute: typeof PrivacidadeRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/produtos': {
@@ -236,20 +174,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TecnologiaRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/casos-de-sucesso/': {
-      id: '/casos-de-sucesso/'
-      path: '/'
-      fullPath: '/casos-de-sucesso/'
-      preLoaderRoute: typeof CasosDeSucessoIndexRouteImport
-      parentRoute: typeof CasosDeSucessoRoute
-    }
-    '/casos-de-sucesso/$slug': {
-      id: '/casos-de-sucesso/$slug'
-      path: '/$slug'
-      fullPath: '/casos-de-sucesso/$slug'
-      preLoaderRoute: typeof CasosDeSucessoSlugRouteImport
-      parentRoute: typeof CasosDeSucessoRoute
-    }
     '/produtos/': {
       id: '/produtos/'
       path: '/'
@@ -257,37 +181,23 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProdutosIndexRouteImport
       parentRoute: typeof ProdutosRoute
     }
-    '/produtos/$slug': {
-      id: '/produtos/$slug'
-      path: '/$slug'
-      fullPath: '/produtos/$slug'
-      preLoaderRoute: typeof ProdutosSlugRouteImport
+    '/produtos/bonzai-mini': {
+      id: '/produtos/bonzai-mini'
+      path: '/bonzai-mini'
+      fullPath: '/produtos/bonzai-mini'
+      preLoaderRoute: typeof ProdutosBonzaiMiniRouteImport
       parentRoute: typeof ProdutosRoute
     }
   }
 }
 
-interface CasosDeSucessoRouteChildren {
-  CasosDeSucessoSlugRoute: typeof CasosDeSucessoSlugRoute
-  CasosDeSucessoIndexRoute: typeof CasosDeSucessoIndexRoute
-}
-
-const CasosDeSucessoRouteChildren: CasosDeSucessoRouteChildren = {
-  CasosDeSucessoSlugRoute: CasosDeSucessoSlugRoute,
-  CasosDeSucessoIndexRoute: CasosDeSucessoIndexRoute,
-}
-
-const CasosDeSucessoRouteWithChildren = CasosDeSucessoRoute._addFileChildren(
-  CasosDeSucessoRouteChildren,
-)
-
 interface ProdutosRouteChildren {
-  ProdutosSlugRoute: typeof ProdutosSlugRoute
+  ProdutosBonzaiMiniRoute: typeof ProdutosBonzaiMiniRoute
   ProdutosIndexRoute: typeof ProdutosIndexRoute
 }
 
 const ProdutosRouteChildren: ProdutosRouteChildren = {
-  ProdutosSlugRoute: ProdutosSlugRoute,
+  ProdutosBonzaiMiniRoute: ProdutosBonzaiMiniRoute,
   ProdutosIndexRoute: ProdutosIndexRoute,
 }
 
@@ -297,9 +207,7 @@ const ProdutosRouteWithChildren = ProdutosRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  CasosDeSucessoRoute: CasosDeSucessoRouteWithChildren,
   ContatoRoute: ContatoRoute,
-  PrivacidadeRoute: PrivacidadeRoute,
   ProdutosRoute: ProdutosRouteWithChildren,
   SobreRoute: SobreRoute,
   SolucoesRoute: SolucoesRoute,

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useLocation } from "@tanstack/react-router";
 import { Logo } from "@/components/brand/Logo";
 import { NAV } from "@/lib/site";
+import { waLink } from "@/content/site";
 import { useHeroRevealed } from "@/components/hero/useHeroProgress";
 import { MobileMenu } from "./MobileMenu";
 
@@ -41,9 +42,9 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-2">
-          <Link to="/contato" className="btn-bz hidden lg:inline-flex">
-            Solicitar projeto
-          </Link>
+          <a href={waLink()} target="_blank" rel="noopener noreferrer" className="btn-bz hidden lg:inline-flex">
+            Falar no WhatsApp
+          </a>
           <button
             type="button"
             className="flex h-12 w-12 items-center justify-center rounded-full lg:hidden"

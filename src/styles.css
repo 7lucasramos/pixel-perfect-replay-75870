@@ -64,15 +64,15 @@
 
 :root {
   --bz-white: oklch(1 0 0);
-  --bz-ice: oklch(0.979 0.005 247);
+  --bz-ice: #F5F5F7;
   --bz-ink: oklch(0.176 0.006 270);
   --bz-graphite: oklch(0.283 0.017 264);
   --bz-cyan: oklch(0.71 0.145 232);
   --bz-electric: oklch(0.55 0.23 268);
 
   --radius: 1.5rem;
-  --background: var(--bz-white);
-  --foreground: var(--bz-ink);
+  --background: #FBFBFD;
+  --foreground: #1D1D1F;
   --card: var(--bz-ice);
   --card-foreground: var(--bz-ink);
   --popover: var(--bz-white);
@@ -82,7 +82,7 @@
   --secondary: var(--bz-ice);
   --secondary-foreground: var(--bz-ink);
   --muted: var(--bz-ice);
-  --muted-foreground: color-mix(in oklab, var(--bz-graphite) 75%, transparent);
+  --muted-foreground: #6E6E73;
   --accent: var(--bz-cyan);
   --accent-foreground: var(--bz-ink);
   --destructive: oklch(0.577 0.245 27.325);

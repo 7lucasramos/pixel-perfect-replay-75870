@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { Link, useLocation } from "@tanstack/react-router";
 import { NAV } from "@/lib/site";
+import { waLink } from "@/content/site";
 import { Logo } from "@/components/brand/Logo";
 
 export function MobileMenu({ open, onClose }: { open: boolean; onClose: () => void }) {
@@ -73,14 +74,16 @@ export function MobileMenu({ open, onClose }: { open: boolean; onClose: () => vo
             {n.label}
           </Link>
         ))}
-        <Link
-          to="/contato"
+        <a
+          href={waLink()}
+          target="_blank"
+          rel="noopener noreferrer"
           onClick={onClose}
           className="btn-bz animate-menu-in mt-6 self-start"
           style={{ animationDelay: `${60 + NAV.length * 50}ms` }}
         >
-          Solicitar projeto
-        </Link>
+          Falar no WhatsApp
+        </a>
       </nav>
     </div>
   );

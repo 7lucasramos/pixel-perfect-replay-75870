@@ -1,18 +1,5 @@
 import { useEffect, useRef } from "react";
 import { loadGsap, motionReduced } from "@/lib/motion";
-import { ImageIcon } from "lucide-react";
-import { COPY } from "@/content/site";
-
-export function PhotoPlaceholder({ label = COPY.photo, wide = false, parallax = false }: { label?: string; wide?: boolean; parallax?: boolean }) {
-  const ref = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    if (!parallax || motionReduced()) return;
-    let cancelled = false, revert: (() => void) | undefined;
-    loadGsap().then(({ gsap }) => { if (cancelled) return; const ctx = gsap.context(() => { gsap.fromTo(".placeholder-inner", { y: -20 }, { y: 20, ease: "none", scrollTrigger: { trigger: ref.current, start: "top bottom", end: "bottom top", scrub: true } }); }, ref); revert = () => ctx.revert(); });
-    return () => { cancelled = true; revert?.(); };
-  }, [parallax]);
-  return <div ref={ref} className={`bz-placeholder ${wide ? "aspect-video" : "aspect-[4/3]"}`}><div className="placeholder-inner flex flex-col items-center gap-4"><ImageIcon size={26} strokeWidth={1} aria-hidden="true" /><span className="text-center font-mono text-xs">{label}</span></div></div>;
-}
 
 export function DotCanvas({ metamorphosis = false }: { metamorphosis?: boolean }) {
   const ref = useRef<HTMLCanvasElement>(null);
@@ -74,19 +61,4 @@ export function WaveRings({ className = "" }: { className?: string }) {
     return () => observer.disconnect();
   }, []);
   return <svg ref={ref} viewBox="0 0 600 450" aria-hidden="true" className={`bz-wave-rings ${className}`}><g fill="none" stroke="currentColor" strokeWidth="1">{[45, 80, 115, 150, 185, 220].map(r => <circle key={r} cx="300" cy="225" r={r} />)}</g></svg>;
-}
-
-export function AcousticVisual() {
-  const ref = useRef<SVGSVGElement>(null);
-  useEffect(() => {
-    if (motionReduced()) return;
-    let cancelled = false, revert: (() => void) | undefined;
-    loadGsap().then(({ gsap }) => { if (cancelled) return;
-    const ctx = gsap.context(() => {
-      gsap.from(".bz-beam", { opacity: 0, scaleX: 0, transformOrigin: "left", stagger: .06, scrollTrigger: { trigger: ref.current, start: "top 90%", end: "bottom 40%", scrub: true } });
-      gsap.fromTo(ref.current, { y: -20 }, { y: 20, ease: "none", scrollTrigger: { trigger: ref.current, start: "top bottom", end: "bottom top", scrub: true } });
-    }, ref); revert = () => ctx.revert(); });
-    return () => { cancelled = true; revert?.(); };
-  }, []);
-  return <div className="bz-acoustic relative aspect-[4/3] w-full"><svg ref={ref} viewBox="0 0 600 450" className="h-full w-full text-bz-cyan" aria-hidden="true"><g fill="none" stroke="currentColor" strokeWidth="1">{[130,320].map(y => <g key={y}><rect x="70" y={y - 20} width="24" height="40" rx="3" />{[-100,-65,-30,0,30,65,100].map(d => <line className="bz-beam" key={d} x1="94" y1={y} x2="540" y2={y + d} opacity=".4" />)}{[40,75,110].map(r => <circle key={r} cx="82" cy={y} r={r} opacity=".2" />)}</g>)}</g></svg><p className="absolute bottom-2 left-6 font-mono text-xs text-bz-white/85">{COPY.conceptual}</p></div>;
 }

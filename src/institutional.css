@@ -83,3 +83,9 @@
 html.bz-motion-paused *, html.bz-motion-paused *::before, html.bz-motion-paused *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
 html.bz-motion-paused .bz-cursor { display: none; }
 .hero-static .hz-legibility { opacity: 1; }
+
+/* Mobile sticky contact bar (global). */
+.bz-sticky-cta { position: fixed; left: 0; right: 0; bottom: 0; z-index: 70; display: flex; gap: 8px; padding: 10px 16px max(10px, env(safe-area-inset-bottom)); background: color-mix(in oklab, var(--background) 88%, transparent); backdrop-filter: saturate(180%) blur(20px); border-top: 1px solid var(--border); }
+.bz-sticky-wa { flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; border-radius: 9999px; background: var(--bz-ink); color: var(--bz-white); font-size: 15px; font-weight: 600; }
+.bz-sticky-mail { display: inline-flex; align-items: center; justify-content: center; width: 48px; min-height: 48px; border-radius: 9999px; border: 1px solid var(--input); color: var(--foreground); }
+@media (min-width: 1024px) { .bz-sticky-cta { display: none; } }

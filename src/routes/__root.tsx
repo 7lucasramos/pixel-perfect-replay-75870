@@ -20,6 +20,7 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { WaveCursor } from "@/components/layout/WaveCursor";
+import { StickyContactBar } from "@/components/layout/StickyContactBar";
 
 function NotFoundComponent() {
   return <SiteNotFound />;
@@ -58,7 +59,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { name: "theme-color", content: "#F6F9FC" },
+      { name: "theme-color", content: "#FBFBFD" },
       { title: "Bonzai System" },
     ],
     links: [
@@ -110,6 +111,7 @@ function RootComponent() {
       <RouteTransition><Outlet /></RouteTransition>
       <Footer />
       <WaveCursor />
+      <StickyContactBar />
     </QueryClientProvider>
   );
 }
