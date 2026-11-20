@@ -19,16 +19,16 @@ export function SystemPage() {
 
     <section id="visao-geral" className="container-bz scroll-mt-28 pb-20 pt-32 lg:pb-28 lg:pt-44">
       <div className="grid items-center gap-12 md:grid-cols-2">
-        <div><p className="eyebrow">SISTEMA</p><h1 className="bz-page-title mt-6">Bonzai Mini</h1><p className="mt-6 font-display text-2xl">Line array de 8 módulos por lado.</p><p className="mt-5 max-w-md text-lg leading-relaxed text-muted-foreground">Dois módulos TW e seis Mini em curva, com subgraves ativos BZ18B. Todos os dados abaixo vêm do manual do produto.</p><ContactButtons className="mt-9" message={MSG} subject="Interesse no sistema Bonzai Mini" /></div>
+        <div><p className="eyebrow">SISTEMA</p><h1 className="bz-page-title mt-6">Bonzai Mini</h1><p className="mt-6 font-display text-2xl">Line array de 8 módulos por lado.</p><p className="mt-5 max-w-md text-lg leading-relaxed text-muted-foreground">Dois módulos TW e seis Mini em curva, com 1 subgrave ativo BZ18B por lado. Todos os dados abaixo vêm do manual do produto.</p><ContactButtons className="mt-9" message={MSG} subject="Interesse no sistema Bonzai Mini" /></div>
         <div className="flex justify-center"><LineArrayGraphic className="h-[340px] w-auto md:h-[460px]" /></div>
       </div>
     </section>
 
     <section id="sistema" className="scroll-mt-28 bg-bz-ice py-20 lg:py-28"><Reveal className="container-bz">
       <h2 data-reveal className="bz-section-title max-w-2xl">O sistema completo.</h2>
-      <p data-reveal className="mt-5 max-w-xl text-lg text-muted-foreground">Dois lados, L e R, com 8 módulos cada, mais os subgraves.</p>
-      <div data-reveal className="mt-12 grid items-end justify-items-center gap-8 rounded-3xl bg-background p-8 md:grid-cols-3 lg:p-12">
-        {["Lado L", "Subgraves BZ18B", "Lado R"].map((t, i) => <figure key={t} className="text-center">{i === 1 ? <div className="mx-auto flex h-[150px] w-[190px] items-center justify-center rounded-2xl border-2 border-bz-ink bg-bz-ink/5"><Volume2 size={44} strokeWidth={1.25} className="text-bz-cyan" aria-hidden="true" /></div> : <LineArrayGraphic className="mx-auto h-[220px] w-auto" />}<figcaption className="mt-4 font-mono text-sm text-muted-foreground">{t}</figcaption></figure>)}
+      <p data-reveal className="mt-5 max-w-xl text-lg text-muted-foreground">Dois lados, L e R. Cada lado tem um line array de 8 módulos e 1 subgrave BZ18B.</p>
+      <div data-reveal className="mt-12 grid items-end justify-items-center gap-10 rounded-3xl bg-background p-8 md:grid-cols-2 lg:p-12">
+        {["Lado L", "Lado R"].map((t) => <figure key={t} className="text-center"><div className="flex items-end justify-center gap-6"><LineArrayGraphic className="h-[220px] w-auto" /><div className="mb-2 flex h-[110px] w-[130px] items-center justify-center rounded-2xl border-2 border-bz-ink bg-bz-ink/5"><Volume2 size={36} strokeWidth={1.25} className="text-bz-cyan" aria-hidden="true" /></div></div><figcaption className="mt-4 font-mono text-sm text-muted-foreground">{t}: 8 módulos + 1 subgrave BZ18B</figcaption></figure>)}
       </div>
       <div className="mt-10 grid gap-6 sm:grid-cols-3">
         <Big value="8" unit="módulos" label="Por lado" />

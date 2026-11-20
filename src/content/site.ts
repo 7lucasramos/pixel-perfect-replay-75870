@@ -67,7 +67,7 @@ export const COPY = {
  techText: "Veja como o sistema Bonzai Mini distribui o som sobre uma área de 30 × 30 m, com os níveis de pressão sonora em cada distância.",
  techButton: "Conhecer a tecnologia",
  solutionsTitle: "Soluções para cada tipo de projeto", solutionsPageTitle: "Aplicações dos sistemas Bonzai", solutionsButton: "Ver todas as soluções",
- systemEyebrow: "Sistema", systemTitle: "Bonzai Mini", systemText: "Line array de 8 módulos, 450 W por lado e subgraves ativos. Dados completos do manual do produto.", systemButton: "Ver o sistema completo",
+ systemEyebrow: "Sistema", systemTitle: "Bonzai Mini", systemText: "Line array de 8 módulos e 1 subgrave por lado, 450 W por lado. Dados completos do manual do produto.", systemButton: "Ver o sistema completo",
  ctaTitle: "Vamos projetar o som do seu próximo projeto?", ctaText: "Fale direto com a equipe Bonzai e descubra a solução ideal para o seu projeto.",
  whatsappCta: "Falar no WhatsApp", emailCta: "Enviar e-mail",
  contactTitle: "Fale com a equipe Bonzai", contactText: "Escolha o canal que preferir. Respondemos direto pelo WhatsApp ou por e-mail.",
